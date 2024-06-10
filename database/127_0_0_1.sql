@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 09, 2024 at 04:23 AM
+-- Generation Time: Jun 10, 2024 at 12:35 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -923,7 +923,7 @@ CREATE TABLE `pma__userconfig` (
 --
 
 INSERT INTO `pma__userconfig` (`username`, `timevalue`, `config_data`) VALUES
-('root', '2024-06-09 02:23:00', '{\"Console\\/Mode\":\"collapse\",\"NavigationWidth\":286}');
+('root', '2024-06-10 10:35:36', '{\"Console\\/Mode\":\"collapse\",\"NavigationWidth\":219}');
 
 -- --------------------------------------------------------
 
