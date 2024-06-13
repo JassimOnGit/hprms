@@ -44,7 +44,7 @@
                 while ($row = $result->fetch_assoc()) {
                     echo "<div class='patient-record'>";
                     echo "<h2>Patient Information</h2>";
-                    echo "<p>Patient Name: " . $row["fullname"] . "</p>";
+                    echo "<p><strong>Patient Name:</strong> " . $row["fullname"] . "</p>";
 
                     // Query patient history based on the patient ID
                     $patientId = $row["id"];
@@ -59,12 +59,12 @@
                         echo "<div class='patient-history'>";
                         echo "<h3>Patient History and Records</h3>";
                         while ($historyRow = $historyResult->fetch_assoc()) {
-                            echo "<p>Illness: " . $historyRow["illness"] . "</p>";
-                            echo "<p>Diagnosis: " . $historyRow["diagnosis"] . "</p>";
-                            echo "<p>Treatment: " . $historyRow["treatment"] . "</p>";
-                            echo "<p>Remarks: " . $historyRow["remarks"] . "</p>";
-                            echo "<p>Date Created: " . $historyRow["date_created"] . "</p>";
-                            echo "<p>Date Updated: " . $historyRow["date_updated"] . "</p>";
+                            echo "<p><strong>Illness:</strong> " . $historyRow["illness"] . "</p>";
+                            echo "<p><strong>Diagnosis:</strong> " . $historyRow["diagnosis"] . "</p>";
+                            echo "<p><strong>Treatment:</strong> " . $historyRow["treatment"] . "</p>";
+                            echo "<p><strong>Remarks:</strong> " . $historyRow["remarks"] . "</p>";
+                            //echo "<p><strong>Date Created:</strong> " . $historyRow["date_created"] . "</p>";
+                            //echo "<p><strong>Date Updated:</strong> " . $historyRow["date_updated"] . "</p>";
 
                             // Query patient details based on the patient ID
                             $detailsSql = "SELECT * FROM patient_details WHERE patient_id = ?";
@@ -101,22 +101,48 @@
                                 echo "<div class='doctor-info'>";
                                 echo "<h3>Assigned Doctor</h3>";
                                 while ($doctorRow = $doctorResult->fetch_assoc()) {
-                                    echo "<p>Doctor Name: " . $doctorRow["fullname"] . "</p>";
-                                    echo "<p>Specialization: " . $doctorRow["specialization"] . "</p>";
-                                    echo "<p>email: " . $doctorRow["email"] . "</p>";
-                                    echo "<p>contact number: " . $doctorRow["contact"] . "</p>";
+                                    echo "<p><strong>Doctor Name:</strong> " . $doctorRow["fullname"] . "</p>";
+                                    echo "<p><strong>Specialization:</strong> " . $doctorRow["specialization"] . "</p>";
+                                    echo "<p><strong>Email:</strong> " . $doctorRow["email"] . "</p>";
+                                    echo "<p><strong>Contact Number:</strong> " . $doctorRow["contact"] . "</p>";
                                 }
                                 echo "</div>";
                             } else {
                                 echo "<p>No doctor information found.</p>";
                             }
+                            $doctorStmt->close();
                         }
                         echo "</div>";
                     } else {
                         echo "<p>No patient history found.</p>";
                     }
-                    
-                    echo "</div>";
+
+                    // Query and display admission history
+                    $admissionHistorySql = "SELECT * FROM admission_history WHERE patient_id = ?";
+                    $admissionHistoryStmt = $conn->prepare($admissionHistorySql);
+                    $admissionHistoryStmt->bind_param("i", $patientId);
+                    $admissionHistoryStmt->execute();
+                    $admissionHistoryResult = $admissionHistoryStmt->get_result();
+
+                    if ($admissionHistoryResult->num_rows > 0) {
+                        echo "<div class='admission-history'>";
+                        echo "<h3>Admission History</h3>";
+                        while ($admissionHistoryRow = $admissionHistoryResult->fetch_assoc()) {
+                            echo "<p><strong>Admission ID:</strong> " . $admissionHistoryRow["room_id"] . "</p>";
+                            echo "<p><strong>Patient ID:</strong> " . $admissionHistoryRow["patient_id"] . "</p>";
+                            echo "<p><strong>Admission Date:</strong> " . $admissionHistoryRow["date_admitted"] . "</p>";
+                            echo "<p><strong>Discharge Date:</strong> " . $admissionHistoryRow["date_discharged"] . "</p>";
+                            //echo "<p><strong>Status:</strong> " . $admissionHistoryRow["status"] . "</p>";
+                            //echo "<p><strong>Date Created:</strong> " . $admissionHistoryRow["date_created"] . "</p>";
+                            //echo "<p><strong>Date Updated:</strong> " . $admissionHistoryRow["date_updated"] . "</p>";
+                        }
+                        echo "</div>";
+                    } else {
+                        echo "<p>No admission history found.</p>";
+                    }
+                    $admissionHistoryStmt->close();
+
+                    echo "</div>"; // End of patient-record
                 }
             } else {
                 echo "<p>No patient records found.</p>";
@@ -124,8 +150,7 @@
 
             // Close statements
             $stmt->close();
-            //$historyStmt->close(); - commented out to avoid error
-            //$doctorStmt->close(); - commented out to avoid error
+            $historyStmt->close();
         }
 
         // Close the database connection
