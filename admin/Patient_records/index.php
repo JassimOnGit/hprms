@@ -1,16 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Patient Records</title>
-</head>
-<body>
-    <h1>Patient Records</h1>
-    
     <!-- Patient input form -->
-    <form method="POST" action="">
-        <label for="patientCode">Patient Code:</label>
-        <input type="text" name="patientCode" id="patientCode" required>
-        <button type="submit">Submit</button>
+    <form method="POST" action="" class="mb-4">
+        <div class="form-group">
+            <label for="patientCode">Patient Code:</label>
+            <input type="text" name="patientCode" id="patientCode" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     
     <?php
@@ -24,7 +18,7 @@
 
         // Check connection
         if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
+            die("<div class='alert alert-danger'>Connection failed: " . $conn->connect_error . "</div>");
         }
 
         // Check if the form is submitted
@@ -38,7 +32,7 @@
             $stmt->bind_param("s", $patientCode);
             $stmt->execute();
             $result = $stmt->get_result();
-            
+            echo "<hr>";
             // Display patient records
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
@@ -53,7 +47,7 @@
                     $historyStmt->bind_param("i", $patientId);
                     $historyStmt->execute();
                     $historyResult = $historyStmt->get_result();
-                    
+                    echo "<hr>";
                     // Display patient history
                     if ($historyResult->num_rows > 0) {
                         echo "<div class='patient-history'>";
@@ -63,8 +57,6 @@
                             echo "<p><strong>Diagnosis:</strong> " . $historyRow["diagnosis"] . "</p>";
                             echo "<p><strong>Treatment:</strong> " . $historyRow["treatment"] . "</p>";
                             echo "<p><strong>Remarks:</strong> " . $historyRow["remarks"] . "</p>";
-                            //echo "<p><strong>Date Created:</strong> " . $historyRow["date_created"] . "</p>";
-                            //echo "<p><strong>Date Updated:</strong> " . $historyRow["date_updated"] . "</p>";
 
                             // Query patient details based on the patient ID
                             $detailsSql = "SELECT * FROM patient_details WHERE patient_id = ?";
@@ -72,7 +64,7 @@
                             $detailsStmt->bind_param("i", $patientId);
                             $detailsStmt->execute();
                             $detailsResult = $detailsStmt->get_result();
-
+                            echo "<hr>";
                             // Display patient details
                             if ($detailsResult->num_rows > 0) {
                                 echo "<div class='patient-details'>";
@@ -84,7 +76,7 @@
                             } else {
                                 echo "<p>No patient details found.</p>";
                             }
-
+                            echo "<hr>";
                             // Close statement
                             $detailsStmt->close();
 
@@ -116,7 +108,7 @@
                     } else {
                         echo "<p>No patient history found.</p>";
                     }
-
+                    echo "<hr>";
                     // Query and display admission history
                     $admissionHistorySql = "SELECT * FROM admission_history WHERE patient_id = ?";
                     $admissionHistoryStmt = $conn->prepare($admissionHistorySql);
@@ -132,9 +124,6 @@
                             echo "<p><strong>Patient ID:</strong> " . $admissionHistoryRow["patient_id"] . "</p>";
                             echo "<p><strong>Admission Date:</strong> " . $admissionHistoryRow["date_admitted"] . "</p>";
                             echo "<p><strong>Discharge Date:</strong> " . $admissionHistoryRow["date_discharged"] . "</p>";
-                            //echo "<p><strong>Status:</strong> " . $admissionHistoryRow["status"] . "</p>";
-                            //echo "<p><strong>Date Created:</strong> " . $admissionHistoryRow["date_created"] . "</p>";
-                            //echo "<p><strong>Date Updated:</strong> " . $admissionHistoryRow["date_updated"] . "</p>";
                         }
                         echo "</div>";
                     } else {
@@ -145,9 +134,9 @@
                     echo "</div>"; // End of patient-record
                 }
             } else {
-                echo "<p>No patient records found.</p>";
+                echo "<div class='alert alert-warning'>No patient records found.</div>";
             }
-
+            
             // Close statements
             $stmt->close();
             $historyStmt->close();
@@ -155,6 +144,10 @@
 
         // Close the database connection
         $conn->close();
+        echo "<hr>";
     ?>
-</body>
-</html>
+</div>
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
