@@ -6,7 +6,7 @@
         height: 100%;
     }
 </style>
-<h1>Welcome to <?php echo $_settings->info('name') ?></h1>
+<h1><?php echo $_settings->info('name') ?></h1>
 <hr class="border-info">
 <div class="row">
     <div class="col-12 col-sm-12 col-md-6 col-lg-3">

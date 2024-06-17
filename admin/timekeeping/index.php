@@ -1,7 +1,7 @@
 <?php 
 // timekeeping.php
-echo "<h1 class='mb-4'>Timekeeping</h1>";
-
+echo "<h1 class='mb-4'>CHMC Timekeeping</h1>";
+echo "<hr>"; // Add a strong horizontal line here
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Form was submitted - save data to database
     $user_id = $_POST['user_id'];
@@ -54,7 +54,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit" name="clock_in" class="btn btn-primary">Clock In</button>
         <button type="submit" name="clock_out" class="btn btn-primary ml-2">Clock Out</button>
     </form>';
+    echo "<hr>"; // Add a strong horizontal line here
 }
 
 // Add a button that links to the attendance history page
 echo '<a href="index.php?page=timekeeping/attendance_history" class="btn btn-secondary mt-4">View Attendance History</a>';
+echo "<hr>"; // Add a strong horizontal line here
