@@ -8,9 +8,9 @@
 </style>
 <div class="card card-outline card-teal rounded-0 shadow">
 	<div class="card-header">
-		<h3 class="card-title">List of Room Types</h3>
+		<h3 class="card-title">List of Hospital Staff</h3>
 		<div class="card-tools">
-			<a href="javascript:void(0)" id="create_new" class="btn btn-flat btn-sm btn-primary"><span class="fas fa-plus"></span>  Add New Room Type</a>
+			<a href="javascript:void(0)" id="create_new" class="btn btn-flat btn-sm btn-primary"><span class="fas fa-plus"></span>  Add New Staff</a>
 		</div>
 	</div>
 	<div class="card-body">
@@ -28,22 +28,22 @@
 					<tr>
 						<th>#</th>
 						<th>Date Created</th>
-						<th>Room Type</th>
-						<th>Description</th>
+						<th>Fullname</th>
+						<th>Specialization</th>
 						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php 
 						$i = 1;
-						$qry = $conn->query("SELECT * from `room_type_list` where delete_flag = 0 order by `room` asc ");
+						$qry = $conn->query("SELECT * from `hospital_staff` where delete_flag = 0 order by `fullname` asc ");
 						while($row = $qry->fetch_assoc()):
 					?>
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
 							<td class=""><?php echo date("Y-m-d H:i",strtotime($row['date_created'])) ?></td>
-							<td><?php echo ($row['room']) ?></td>
-							<td class="truncate-1"><?php echo $row['description'] ?></td>
+							<td><?php echo ucwords($row['fullname']) ?></td>
+							<td class="truncate-1"><?php echo $row['specialization'] ?></td>
 							<td align="center">
 								 <button type="button" class="btn btn-flat btn-default btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
 				                  		Action
@@ -68,16 +68,16 @@
 <script>
 	$(document).ready(function(){
         $('#create_new').click(function(){
-			uni_modal("Add New Room Type","room_types/manage_room_type.php")
+			uni_modal("Add New Staff","hospital_staff/manage_staff.php")
 		})
         $('.edit_data').click(function(){
-			uni_modal("Update Room Type Details","room_types/manage_room_type.php?id="+$(this).attr('data-id'))
+			uni_modal("Update Staff Details","hospital_staff/manage_staff.php?id="+$(this).attr('data-id'))
 		})
 		$('.delete_data').click(function(){
-			_conf("Are you sure to delete this Room Type permanently?","delete_room_type",[$(this).attr('data-id')])
+			_conf("Are you sure to delete this Staff permanently?","delete_staff",[$(this).attr('data-id')])
 		})
 		$('.view_data').click(function(){
-			uni_modal("Room Type Details","room_types/view_room_type.php?id="+$(this).attr('data-id'))
+			uni_modal("Staff Details","hospital_staff/view_staff.php?id="+$(this).attr('data-id'))
 		})
 		$('.table td, .table th').addClass('py-1 px-2 align-middle')
 		$('.table').dataTable({
@@ -86,10 +86,10 @@
             ],
         });
 	})
-	function delete_room_type($id){
+	function delete_staff($id){
 		start_loader();
 		$.ajax({
-			url:_base_url_+"classes/Master.php?f=delete_room_type",
+			url:_base_url_+"classes/Master.php?f=delete_staff",
 			method:"POST",
 			data:{id: $id},
 			dataType:"json",

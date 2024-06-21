@@ -160,7 +160,7 @@ echo "<hr>"; // Add a strong horizontal line here
         
         // Close statements
         $stmt->close();
-        $historyStmt->close();
+        //$historyStmt->close(); - comment out to avoid error when closing the statement
     }
 
     // Close the database connection

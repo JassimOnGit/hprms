@@ -75,10 +75,10 @@
                       </a>
                     </li>
                     <li class="nav-item dropdown">
-                      <a href="<?php echo base_url ?>admin/?page=prescription" class="nav-link nav-prescription">
+                      <a href="<?php echo base_url ?>admin/?page=prescription_assistance" class="nav-link nav-prescription_assistance">
                         <i class="nav-icon fas fa-prescription"></i>
                         <p>
-                          Prescription Assist   
+                          Prescription Assistance   
                         </p>
                       </a>
                     </li>

@@ -31,7 +31,7 @@
 						<th>Date Created</th>
 						<th>Room</th>
 						<th>Room Type</th>
-						<th>Descriptiom</th>
+						<th>Description</th>
 						<th>Action</th>
 					</tr>
 				</thead>
