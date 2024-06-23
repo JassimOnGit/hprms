@@ -66,6 +66,7 @@
                       </a>
                     </li>
                     <?php endif; ?>
+                    <?php if($_settings->userdata('type') == 0 || $_settings->userdata('type') == 1 || $_settings->userdata('type') == 2): ?>
                     <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=patient_records" class="nav-link nav-patient_records">
                         <i class="nav-icon fas fa-clipboard"></i>
@@ -107,7 +108,9 @@
                           Billing 
                         </p>
                       </a>
-                    </li>                    
+                    </li>
+                    <?php endif; ?>     
+                    <?php if($_settings->userdata('type') == 0 || $_settings->userdata('type') == 1): ?>               
                     <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=inventory" class="nav-link nav-inventory">
                         <i class="nav-icon fas fa-file-excel"></i>
@@ -132,7 +135,6 @@
                         </p>
                       </a>
                     </li>
-                    <?php if($_settings->userdata('type') == 1): ?>
                     <li class="nav-header">Maintenance</li>
                     <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=room_types" class="nav-link nav-room_types">
@@ -150,6 +152,8 @@
                         </p>
                       </a>
                     </li>
+                    <?php endif; ?>   
+                    <?php if($_settings->userdata('type') == 1): ?>
                     <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=user/list" class="nav-link nav-user_list">
                         <i class="nav-icon fas fa-users-cog"></i>
@@ -167,7 +171,6 @@
                       </a>
                     </li>
                     <?php endif; ?>
-
                   </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
