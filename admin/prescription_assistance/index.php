@@ -1,135 +1,104 @@
-<?php
-// Create connection
-$conn = new mysqli('localhost', 'root', '', 'hprms_db');
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Fetch patient codes for the dropdown
-$patient_codes = [];
-$sql = "SELECT id, code FROM patient_list";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $patient_codes[$row['id']] = $row['code'];
-    }
-}
-
-// Fetch doctors for the dropdown
-$doctors = [];
-$sql = "SELECT id, fullname FROM doctor_list";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $doctors[$row['id']] = $row['fullname'];
-    }
-}
-
-// Handle form submission
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $patient_code = $_POST['patient_id'];
-    $doctor_id = $_POST['doctor_id'];
-    $medication_name = $_POST['medication_name'];
-    $dosage = $_POST['dosage'];
-    $start_date = $_POST['start_date'];
-    $end_date = $_POST['end_date'];
-    $interval_hours = $_POST['interval_hours'];
-    $notes = $_POST['notes'];
-
-    // Get patient id from patient_list based on code
-    $sql_patient = "SELECT id FROM patient_list WHERE code = '$patient_code'";
-    $result_patient = $conn->query($sql_patient);
-
-    if ($result_patient) {
-        if ($result_patient->num_rows > 0) {
-            $row = $result_patient->fetch_assoc();
-            $patient_id = $row['id'];
-
-            // Insert prescription into prescriptions table
-            $sql = "INSERT INTO prescriptions (user_id, doctor_id, medication_name, dosage, start_date, end_date, interval_hours, notes) 
-                    VALUES ('$patient_id', '$doctor_id', '$medication_name', '$dosage', '$start_date', '$end_date', '$interval_hours', '$notes')";
-
-            if ($conn->query($sql) === TRUE) {
-                echo "New prescription added successfully";
-            } else {
-                echo "Error inserting prescription: " . $conn->error;
-            }
-        } else {
-            echo "Patient not found";
+<div class="container">
+    <iframe id="printFrame" style="display:none;"></iframe>
+    <script>
+        function printPrescriptions() {
+            var printContents = document.getElementById("prescriptions").innerHTML;
+            var printFrame = document.getElementById("printFrame").contentWindow;
+            
+            printFrame.document.open();
+            printFrame.document.write('<html><head><title>Print Prescriptions</title>');
+            printFrame.document.write('<link rel="stylesheet" href="path/to/your/css/file.css" type="text/css" />');
+            printFrame.document.write('</head><body>');
+            printFrame.document.write(printContents);
+            printFrame.document.write('</body></html>');
+            printFrame.document.close();
+            printFrame.focus();
+            printFrame.print();
         }
-    } else {
-        echo "Error: " . $sql_patient . "<br>" . $conn->error;
-    }
-}
-
-$conn->close();
-?>
-<div>
-    <h1 class="text-left">CHMC Prescription Assistance</h1>
-    <hr>
-    <form method="post" action="">
-        <div class="form-group mb-4">
-            <label for="patient_id">Patient Code:</label>
-            <select id="patient_id" name="patient_id" class="form-control" required>
-                <?php foreach ($patient_codes as $id => $code): ?>
-                    <option value="<?php echo $code; ?>"><?php echo $code; ?></option>
-                <?php endforeach; ?>
-            </select>
+    </script>
+    <?php
+    echo "<h1 class='mb-4'>CHMC Prescription Assistance</h1>";
+    echo "<hr>"; // Add a strong horizontal line here
+    ?>
+    <!-- Patient input form -->
+    <form method="POST" action="" class="mb-4">
+        <div class="form-group">
+            <label for="patientCode">Patient Code:</label>
+            <input type="text" name="patientCode" id="patientCode" class="form-control" required>
         </div>
-        <hr>
-        <div class="form-group mb-4">
-            <label for="doctor_id">Doctor:</label>
-            <select id="doctor_id" name="doctor_id" class="form-control" required>
-                <?php foreach ($doctors as $id => $fullname): ?>
-                    <option value="<?php echo $id; ?>"><?php echo $fullname; ?></option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-        <hr>
-        <div class="form-group mb-4">
-            <label for="medication_name">Medication Name:</label>
-            <input type="text" id="medication_name" name="medication_name" class="form-control" required>
-        </div>
-        <hr>
-        <div class="form-group mb-4">
-            <label for="dosage">Dosage:</label>
-            <input type="text" id="dosage" name="dosage" class="form-control" required>
-        </div>
-        <hr>
-        <div class="form-group mb-4">
-            <label for="start_date">Start Date:</label>
-            <input type="date" id="start_date" name="start_date" class="form-control" required>
-        </div>
-        <hr>
-        <div class="form-group mb-4">
-            <label for="end_date">End Date:</label>
-            <input type="date" id="end_date" name="end_date" class="form-control" required>
-        </div>
-        <hr>
-        <div class="form-group mb-4">
-            <label for="interval_hours">Interval Hours:</label>
-            <input type="number" id="interval_hours" name="interval_hours" class="form-control" required>
-        </div>
-        <hr>
-        <div class="form-group mb-4">
-            <label for="notes">Notes:</label>
-            <textarea id="notes" name="notes" class="form-control"></textarea>
-        </div>
- 
-        <button type="submit" class="btn btn-primary">Add Prescription</button>
-        <button type="button" class="btn btn-secondary" onclick="redirectToPatientView()">Patient View</button>
-
-        <script>
-            function redirectToPatientView() {
-                window.location.href = "index.php?page=prescription_assistance/patient_prescription";   
-                // or simply
-                // window.location.href = 'patient_prescription.php';
-            }
-        </script>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    <?php
+    echo "<hr>"; // Add a strong horizontal line here
+    ?>
+
+    <?php
+    // Establish database connection (replace with your own connection details)
+    $servername = "localhost";
+    $username = "username";
+    $password = "password";
+    $dbname = "hprms";
+
+    // Create connection
+    $conn = new mysqli('localhost', 'root', '', 'hprms_db');
+    // Check connection
+    if ($conn->connect_error) {
+        die("<div class='alert alert-danger'>Connection failed: " . $conn->connect_error . "</div>");
+    }
+
+    // Check if the form is submitted
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Get the patient code from the form
+        $patientCode = $_POST["patientCode"];
+        
+        // Query to fetch patient id and name from patient_list based on the patient code
+        $sql = "SELECT id, fullname FROM patient_list WHERE code = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $patientCode);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            // Fetch the patient id and name
+            $row = $result->fetch_assoc();
+            $patientId = $row['id'];
+            $patientName = $row['fullname'];
+
+            // Query and display prescriptions
+            $prescriptionsSql = "SELECT medication_name, dosage, start_date, end_date, interval_hours, notes 
+                                 FROM prescriptions 
+                                 WHERE user_id = ?";
+            $prescriptionsStmt = $conn->prepare($prescriptionsSql);
+            $prescriptionsStmt->bind_param("i", $patientId);
+            $prescriptionsStmt->execute();
+            $prescriptionsResult = $prescriptionsStmt->get_result();
+
+            if ($prescriptionsResult->num_rows > 0) {
+                echo "<div id='prescriptions' class='prescriptions'>";
+                echo "<h3>Prescriptions for $patientName</h3>";
+                while ($prescriptionRow = $prescriptionsResult->fetch_assoc()) {
+                    echo "<p><strong>Medication Name:</strong> " . $prescriptionRow["medication_name"] . "</p>";
+                    echo "<p><strong>Dosage:</strong> " . $prescriptionRow["dosage"] . "</p>";
+                    echo "<p><strong>Start Date:</strong> " . $prescriptionRow["start_date"] . "</p>";
+                    echo "<p><strong>End Date:</strong> " . $prescriptionRow["end_date"] . "</p>";
+                    echo "<p><strong>Interval Hours:</strong> " . $prescriptionRow["interval_hours"] . "</p>";
+                    echo "<p><strong>Notes:</strong> " . $prescriptionRow["notes"] . "</p>";
+                    echo "<hr>"; // Adding a horizontal line between prescriptions
+                }
+                echo "</div>";
+                echo "<button onclick='printPrescriptions()' class='btn btn-success'>Print Prescriptions</button>";
+            } else {
+                echo "<p>No prescriptions found for $patientName.</p>";
+            }
+            $prescriptionsStmt->close();
+        } else {
+            echo "<p>No patient found with the provided code.</p>";
+        }
+
+        $stmt->close();
+    }
+
+    // Close the database connection
+    $conn->close();
+    ?>
 </div>
-<hr>

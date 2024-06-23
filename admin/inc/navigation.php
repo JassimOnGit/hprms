@@ -83,6 +83,18 @@
                         </p>
                       </a>
                     </li>
+                    <?php endif; ?>
+                    <?php if($_settings->userdata('type') == 0 || $_settings->userdata('type') == 1): ?>
+                    <li class="nav-item dropdown">
+                      <a href="<?php echo base_url ?>admin/?page=prescription_doctor" class="nav-link nav-prescription_doctor"> <!-- This is for doctor view.! -->
+                        <i class="nav-icon fas fa-prescription"></i>
+                        <p>
+                          Prescription Assistance (MD)
+                        </p>
+                      </a>
+                    </li>
+                    <?php endif; ?>
+                    <?php if($_settings->userdata('type') == 0 || $_settings->userdata('type') == 1 || $_settings->userdata('type') == 2): ?>
                     <li class="nav-header">Emergency</li>
                     <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=emergency" class="nav-link nav-emergency">
