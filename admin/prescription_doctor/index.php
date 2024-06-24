@@ -67,10 +67,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 $conn->close();
+
+echo "<h1 class='mb-4'>CHMC Prescription Assistance (Doctor View)</h1>";
+echo "<hr>"; // Add a strong horizontal line here
+
 ?>
 <div>
-    <h1 class="text-left">CHMC Prescription Assistance (Doctor View)</h1>
-    <hr>
     <form method="post" action="">
         <div class="form-group mb-4">
             <label for="patient_id">Patient Code:</label>
