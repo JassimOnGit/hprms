@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $conn->close();
 ?>
 <div>
-    <h1 class="text-left">CHMC Prescription Assistance</h1>
+    <h1 class="text-left">CHMC Prescription Assistance (Doctor View)</h1>
     <hr>
     <form method="post" action="">
         <div class="form-group mb-4">

@@ -40,7 +40,7 @@ if(isset($_GET['id'])){
         </div>
         <div class="form-group">
             <label for="description" class="control-label">Description</label>
-            <textarea rows="3" name="description" id="description" class="form-control form-control-sm rounded-0" placeholder="Write the room type's description here." required><?php echo isset($description) ? $description : '' ?></textarea>
+            <textarea rows="3" name="description" id="description" class="form-control form-control-sm rounded-0" placeholder="Write the room's description here." required><?php echo isset($description) ? $description : '' ?></textarea>
         </div>
         <div class="form-group">
             <label for="capacity" class="control-label">Capacity</label>

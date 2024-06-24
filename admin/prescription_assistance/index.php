@@ -1,4 +1,4 @@
-<div class="container">
+<div>
     <iframe id="printFrame" style="display:none;"></iframe>
     <script>
         function printPrescriptions() {
