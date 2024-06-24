@@ -330,6 +330,58 @@ Class Master extends DBConnection {
 		}
 		return json_encode($resp);
 	}
+	function save_equipment_type(){
+		extract($_POST);
+		$data = "";
+		foreach($_POST as $k =>$v){
+			if(!in_array($k,array('id'))){
+				if(!is_numeric($v))
+					$v = $this->conn->real_escape_string($v);
+				if(!empty($data)) $data .=",";
+				$data .= " `{$k}`='{$v}' ";
+			}
+		}
+		if(empty($id)){
+			$sql = "INSERT INTO `equipment_type_list` set {$data} ";
+		}else{
+			$sql = "UPDATE `equipment_type_list` set {$data} where id = '{$id}' ";
+		}
+		$check = $this->conn->query("SELECT * FROM `equipment_type_list` where `equipment` ='{$equipment}' and delete_flag = 0 ".($id > 0 ? " and id != '{$id}' " : ""))->num_rows;
+		if($check > 0){
+			$resp['status'] = 'failed';
+			$resp['msg'] = "Equipment Type already exists.";
+		}else{
+			$save = $this->conn->query($sql);
+			if($save){
+				$rid = !empty($id) ? $id : $this->conn->insert_id;
+				$resp['status'] = 'success';
+				if(empty($id))
+					$resp['msg'] = "Equipment Type Details has successfully added.";
+				else
+					$resp['msg'] = "Equipent Type Details has been updated successfully.";
+			}else{
+				$resp['status'] = 'failed';
+				$resp['msg'] = "An error occured.";
+				$resp['err'] = $this->conn->error."[{$sql}]";
+			}
+			if($resp['status'] =='success')
+			$this->settings->set_flashdata('success',$resp['msg']);
+		}
+		return json_encode($resp);
+	}
+	function delete_equipment_type(){
+		extract($_POST);
+		$del = $this->conn->query("UPDATE `equipment_type_list` set delete_flag = 1 where id = '{$id}'");
+		if($del){
+			$resp['status'] = 'success';
+			$this->settings->set_flashdata('success',"Equipment Type Details has been deleted successfully.");
+
+		}else{
+			$resp['status'] = 'failed';
+			$resp['error'] = $this->conn->error;
+		}
+		return json_encode($resp);
+	}
 	function save_patient(){
 		if(empty($_POST['id'])){
 			$prefix = "PA-".(date('Ym'));
@@ -522,6 +574,12 @@ switch ($action) {
 	break;
 	case 'delete_room_type':
 		echo $Master->delete_room_type();
+	break;
+	case 'save_equipment_type':
+		echo $Master->save_equipment_type();
+	break;
+	case 'delete_equipment_type':
+		echo $Master->delete_equipment_type();
 	break;
 	case 'save_room':
 		echo $Master->save_room();
