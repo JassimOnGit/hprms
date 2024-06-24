@@ -16,20 +16,31 @@ if ($conn->connect_error) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve and sanitize form inputs
     $patient_name = mysqli_real_escape_string($conn, $_POST['patientName']);
-    $patient_id = mysqli_real_escape_string($conn, $_POST['patientID']);
+    $patient_code = mysqli_real_escape_string($conn, $_POST['patientCode']);
     $amount = mysqli_real_escape_string($conn, $_POST['amount']);
     $payment_method = mysqli_real_escape_string($conn, $_POST['paymentMethod']);
     $payment_status = "Pending"; // Default status
     $payment_date = date('Y-m-d H:i:s'); // Current date and time
 
     // Insert data into the payments table
-    $sql = "INSERT INTO payments (patient_id, patient_name, amount, payment_method, payment_status, payment_date) 
-            VALUES ('$patient_id', '$patient_name', '$amount', '$payment_method', '$payment_status', '$payment_date')";
+    // First, we need to find the patient_id using the patient_code
+    $patient_query = "SELECT id FROM patient_list WHERE code = '$patient_code'";
+    $result = $conn->query($patient_query);
 
-    if ($conn->query($sql) === TRUE) {
-        $message = "New payment record created successfully";
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $patient_id = $row['id'];
+
+        $sql = "INSERT INTO payments (patient_id, patient_name, amount, payment_method, payment_status, payment_date) 
+                VALUES ('$patient_id', '$patient_name', '$amount', '$payment_method', '$payment_status', '$payment_date')";
+
+        if ($conn->query($sql) === TRUE) {
+            $message = "New payment record created successfully, Thank you for your payment!";
+        } else {
+            $message = "Error: " . $sql . "<br>" . $conn->error;
+        }
     } else {
-        $message = "Error: " . $sql . "<br>" . $conn->error;
+        $message = "Error: Invalid Patient Code";
     }
 }
 
@@ -57,22 +68,22 @@ if (!empty($message)) {
 
 <form action="" method="post">
     <div class="form-group">
-        <label for="patientName">Patient Name</label>
+        <label for="patientName">Patient Name:</label>
         <input type="text" class="form-control" id="patientName" name="patientName" required>
     </div>
     <hr>
     <div class="form-group">
-        <label for="patientID">Patient ID</label>
-        <input type="text" class="form-control" id="patientID" name="patientID" required>
+        <label for="patientCode">Patient Code:</label>
+        <input type="text" class="form-control" id="patientCode" name="patientCode" required>
     </div>
     <hr>
     <div class="form-group">
-        <label for="amount">Amount</label>
+        <label for="amount">Amount:</label>
         <input type="number" class="form-control" id="amount" name="amount" required>
     </div>
     <hr>
     <div class="form-group">
-        <label for="paymentMethod">Payment Method</label>
+        <label for="paymentMethod">Payment Method:</label>
         <select class="form-control" id="paymentMethod" name="paymentMethod" required>
             <option value="gcash">GCash</option>
             <option value="paymaya">PayMaya</option>

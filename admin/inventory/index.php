@@ -29,8 +29,8 @@
 					<tr>
 						<th>#</th>
 						<th>Date Created</th>
-						<th>Item</th>
-						<th>Item Type</th>
+						<th>Item Name</th>
+						<th>Equipment/Item Type</th>
 						<th>Description</th>
 						<th>Quantity</th>
 						<th>Action</th>

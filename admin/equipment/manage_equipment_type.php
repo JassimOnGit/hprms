@@ -23,12 +23,12 @@ if(isset($_GET['id'])){
     <form action="" id="equipment_type-form">
         <input type="hidden" name="id" value="<?php echo isset($id) ? $id : '' ?>">
         <div class="form-group">
-            <label for="equipment" class="control-label">Equipment Type</label>
-            <input type="text" name="equipment" id="equipment" class="form-control form-control-border" placeholder="Enter Equipment Type" value ="<?php echo isset($equipment) ? $equipment : '' ?>" required>
+            <label for="equipment" class="control-label">Equipment/Item</label>
+            <input type="text" name="equipment" id="equipment" class="form-control form-control-border" placeholder="Enter Equipment/Item" value ="<?php echo isset($equipment) ? $equipment : '' ?>" required>
         </div>
         <div class="form-group">
             <label for="description" class="control-label">Description</label>
-            <textarea rows="3" name="description" id="description" class="form-control form-control-sm rounded-0" placeholder="Write the equipment type's description here." required><?php echo isset($description) ? $description : '' ?></textarea>
+            <textarea rows="3" name="description" id="description" class="form-control form-control-sm rounded-0" placeholder="Write the equipment/item's description here." required><?php echo isset($description) ? $description : '' ?></textarea>
         </div>
     </form>
 </div>

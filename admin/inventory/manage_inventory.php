@@ -27,7 +27,7 @@ if(isset($_GET['id'])){
             <input type="text" name="name" id="name" class="form-control form-control-border" placeholder="Enter Item Name" value ="<?php echo isset($name) ? $name : '' ?>" required>
         </div>
         <div class="form-group">
-            <label for="equipment_type_id" class="control-label">Item Type</label>
+            <label for="equipment_type_id" class="control-label">Equipment/Item Type</label>
             <select name="equipment_type_id" id="equipment_type_id" class="form-control form-control-border select2">
                 <option value="" disabled <?= !isset($equipment_type_id) ? "selected" : "" ?>></option>
                 <?php 

@@ -18,7 +18,7 @@ if(isset($_GET['id'])){
 </style>
 <div class="container-fluid">
     <dl>
-        <dt class="text-muted">Equipment Type</dt>
+        <dt class="text-muted">Equipment/Item</dt>
         <dd class='pl-4 fs-4 fw-bold'><?= isset($equipment) ? $equipment : '' ?></dd>
         <dt class="text-muted">Description</dt>
         <dd class='pl-4'>

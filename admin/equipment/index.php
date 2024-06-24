@@ -8,7 +8,7 @@
 </style>
 <div class="card card-outline card-teal rounded-0 shadow">
 	<div class="card-header">
-		<h3 class="card-title">List of Equipment Types</h3>
+		<h3 class="card-title">List of Equipment and Items</h3>
 		<div class="card-tools">
 			<a href="javascript:void(0)" id="create_new" class="btn btn-flat btn-sm btn-primary"><span class="fas fa-plus"></span>  Add New Equipment Type</a>
 		</div>
@@ -28,7 +28,7 @@
 					<tr>
 						<th>#</th>
 						<th>Date Created</th>
-						<th>Equipment Type</th>
+						<th>Equipment/Item</th>
 						<th>Description</th>
 						<th>Action</th>
 					</tr>
@@ -68,16 +68,16 @@
 <script>
 	$(document).ready(function(){
         $('#create_new').click(function(){
-			uni_modal("Add New Equipment Type","equipment/manage_equipment_type.php")
+			uni_modal("Add New Equipment/Item","equipment/manage_equipment_type.php")
 		})
         $('.edit_data').click(function(){
-			uni_modal("Update Equipment Type Details","equipment/manage_equipment_type.php?id="+$(this).attr('data-id'))
+			uni_modal("Update Equipment/Item Details","equipment/manage_equipment_type.php?id="+$(this).attr('data-id'))
 		})
 		$('.delete_data').click(function(){
 			_conf("Are you sure to delete this Equipment Type permanently?","delete_equipment_type",[$(this).attr('data-id')])
 		})
 		$('.view_data').click(function(){
-			uni_modal("Equipment Type Details","equipment/view_equipment_type.php?id="+$(this).attr('data-id'))
+			uni_modal("Equipment/Item Details","equipment/view_equipment_type.php?id="+$(this).attr('data-id'))
 		})
 		$('.table td, .table th').addClass('py-1 px-2 align-middle')
 		$('.table').dataTable({

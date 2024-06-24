@@ -20,7 +20,7 @@ if(isset($_GET['id'])){
     <dl>
         <dt class="text-muted">Item Name</dt>
         <dd class='pl-4 fs-4 fw-bold'><?= isset($name) ? $name : '' ?></dd>
-        <dt class="text-muted">Item Type</dt>
+        <dt class="text-muted">Equipment/Item Type</dt>
         <dd class='pl-4 fs-4 fw-bold'><?= isset($equipment) ? $equipment: '' ?></dd>
         <dt class="text-muted">Description</dt>
         <dd class='pl-4'>
