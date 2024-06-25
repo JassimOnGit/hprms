@@ -9,15 +9,17 @@
 <style>
 body { margin: 0; padding: 0; }
 #map { position: absolute; top: 0; bottom: 10%; width: 100%; right: 0; }
-.buttons-container { position: absolute; bottom: 50px; right: 0; width: 100%; background-color: #ffffff; padding: 10px; text-align: center; }
-.button { margin: 0 10px; padding: 10px 20px; background-color: #007bff; color: #ffffff; border: none; border-radius: 5px; cursor: pointer; }
+.buttons-container { position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%); background-color: white; padding: 10px; border-radius: 5px; display: flex; gap: 10px; }
+.button { padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+.button:hover { background-color: #0056b3; }
 </style>
 </head>
 <body>
 <div id="map"></div>
 <div class="buttons-container">
     <button class="button" id="needAmbulance">Need an ambulance</button>
-    <button class="button" id="listAmbulances">List available ambulances</button>
+    <button class="button" id="listAmbulances">List CHMC ambulances</button>
+    <button class="button" id="listAlternativeHospitals">(Data Mining) List hospitals</button>
 </div>
 
 <script>
@@ -26,7 +28,7 @@ const map = new mapboxgl.Map({
     container: 'map',
     // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
     style: 'mapbox://styles/mapbox/streets-v12',
-    zoom: 14 // Default zoom level
+    zoom: 12 // Default zoom level
 });
 
 map.on('load', async () => {
@@ -49,15 +51,24 @@ map.on('load', async () => {
 
 // Button event listeners
 document.getElementById('needAmbulance').addEventListener('click', () => {
-    // Code to handle when "List available ambulances" button is clicked
-    alert('Your request for an ambulance has been sent.');
+    // Code to handle when "Need an ambulance" button is clicked
+    alert('Your request for a dedicated CHMC ambulance has been sent. Hang tight! If you are in a dangerous/life-threatening situation or involved in a crime scene, please call QCPD at 0917-840-3925.');
     // Navigate to index.html within the same website structure
     window.location.href = "index.php?page=ambulance/ambulance_tracking";
 });
 
 document.getElementById('listAmbulances').addEventListener('click', () => {
-    // Code to handle when "List available ambulances" button is clicked
-    alert('List of available ambulances will be displayed.');
+    // Code to handle when "List CHMC ambulances" button is clicked
+    alert('A list of available dedicated CHMC ambulances will be displayed. ETA to your exact location is provided for each ambulance.');
+    // Navigate to ambulance_chmc within the same website structure
+    window.location.href = "index.php?page=ambulance/ambulance_chmc";
+});
+
+document.getElementById('listAlternativeHospitals').addEventListener('click', () => {
+    // Code to handle when "List of alternative hospitals with ambulatory services" button is clicked
+    alert('A comprehensive data-mined list of nearby alternative hospitals with emergency and ambulatory services will be displayed. Please Choose the nearest hospital from your location.');
+    // Navigate to ambulance_other within the same website structure
+    window.location.href = "index.php?page=ambulance/ambulance_other";
 });
 </script>
 
