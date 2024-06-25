@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2024 at 12:36 PM
+-- Generation Time: Jun 25, 2024 at 03:31 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,9 +43,8 @@ CREATE TABLE `admission_history` (
 --
 
 INSERT INTO `admission_history` (`id`, `patient_id`, `room_id`, `date_admitted`, `date_discharged`, `status`, `date_created`, `date_updated`) VALUES
-(4, 1, 1, '2021-12-29 15:00:00', '2021-12-31 15:20:00', '1', '2021-12-30 14:49:29', '2021-12-30 15:20:55'),
-(7, 3, 1, '2021-10-15 08:00:00', '2021-10-16 20:00:00', '1', '2023-05-13 08:51:53', NULL),
-(8, 3, NULL, '2023-06-15 15:00:00', '2023-06-16 04:59:00', '1', '2023-06-15 15:59:00', NULL);
+(12, 18, 1, '2024-06-21 06:06:00', '2024-06-22 06:06:00', '1', '2024-06-22 06:06:30', NULL),
+(13, 36, 8, '2024-06-19 06:52:00', '2024-06-20 06:52:00', '1', '2024-06-22 06:52:50', NULL);
 
 -- --------------------------------------------------------
 
@@ -117,8 +116,89 @@ CREATE TABLE `doctor_list` (
 --
 
 INSERT INTO `doctor_list` (`id`, `fullname`, `specialization`, `email`, `contact`, `delete_flag`, `date_created`, `date_added`) VALUES
-(17, 'Doctor MD1', '', '', '', 0, '2024-05-10 22:05:54', NULL),
-(18, 'Doctor MD2', '', '', '', 0, '2024-06-08 03:48:48', NULL);
+(17, 'Doctor MD1', 'general practitioner', 'doctor@md.com', '09285243690', 0, '2024-05-10 22:05:54', '2024-06-22 06:44:46'),
+(18, 'Doctor MD2', 'pediatrician', '', '', 0, '2024-06-08 03:48:48', '2024-06-22 06:44:59'),
+(19, 'Doctor MD3', 'ob-gyn', '', '', 0, '2024-06-22 05:37:56', '2024-06-22 06:45:13'),
+(20, 'Doctor MD4', 'geriatrics', '', '', 0, '2024-06-22 05:38:05', '2024-06-22 06:45:39');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `equipment_type_list`
+--
+
+CREATE TABLE `equipment_type_list` (
+  `id` int(30) NOT NULL,
+  `equipment` text NOT NULL,
+  `description` text NOT NULL,
+  `delete_flag` tinyint(1) NOT NULL DEFAULT 0,
+  `date_created` datetime NOT NULL DEFAULT current_timestamp(),
+  `date_updated` datetime DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `equipment_type_list`
+--
+
+INSERT INTO `equipment_type_list` (`id`, `equipment`, `description`, `delete_flag`, `date_created`, `date_updated`) VALUES
+(1, 'test', 'test', 1, '2024-06-24 17:59:56', '2024-06-24 18:08:34'),
+(2, 'test', 'test', 1, '2024-06-24 18:22:39', '2024-06-24 18:22:45'),
+(3, 'test', 'test', 1, '2024-06-24 18:22:52', '2024-06-24 18:22:57'),
+(4, 'test equipment', 'test equipment', 0, '2024-06-24 22:06:25', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hospital_staff`
+--
+
+CREATE TABLE `hospital_staff` (
+  `id` int(30) NOT NULL,
+  `fullname` text NOT NULL,
+  `specialization` text NOT NULL,
+  `email` text NOT NULL,
+  `contact` varchar(100) NOT NULL,
+  `delete_flag` tinyint(1) NOT NULL DEFAULT 0,
+  `date_created` datetime NOT NULL DEFAULT current_timestamp(),
+  `date_added` datetime DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `hospital_staff`
+--
+
+INSERT INTO `hospital_staff` (`id`, `fullname`, `specialization`, `email`, `contact`, `delete_flag`, `date_created`, `date_added`) VALUES
+(13, 'Staff Receptionist1', 'hospital reception ', '', '', 0, '2024-06-22 05:33:45', '2024-06-22 06:21:02'),
+(14, 'Staff Janitor1', 'cleaning and sanitization', '', '', 0, '2024-06-22 05:34:08', '2024-06-22 06:20:41'),
+(15, 'Staff Security Guard1', 'hospital security', '', '', 0, '2024-06-22 05:34:33', '2024-06-22 06:21:13'),
+(16, '2', '', '', '', 1, '2024-06-22 05:35:30', '2024-06-22 05:35:44'),
+(17, 'Staff IT Admin1', 'information technology', 'it@it.com', '09285243690', 0, '2024-06-22 06:14:54', '2024-06-22 16:42:29'),
+(18, 'Staff Ambulance Driver1', 'ambulance driver', '', '', 0, '2024-06-22 06:18:57', '2024-06-22 06:19:09');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inventory`
+--
+
+CREATE TABLE `inventory` (
+  `id` int(30) NOT NULL,
+  `equipment_type_id` int(30) NOT NULL,
+  `name` text NOT NULL,
+  `description` text NOT NULL,
+  `quantity` int(5) NOT NULL DEFAULT 0,
+  `delete_flag` tinyint(1) NOT NULL DEFAULT 0,
+  `date_created` datetime NOT NULL DEFAULT current_timestamp(),
+  `date_updated` datetime DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `inventory`
+--
+
+INSERT INTO `inventory` (`id`, `equipment_type_id`, `name`, `description`, `quantity`, `delete_flag`, `date_created`, `date_updated`) VALUES
+(9, 4, 'test', 'test', 2, 1, '2024-06-24 22:12:15', '2024-06-24 22:32:50'),
+(10, 4, 'test', 'test', 3, 0, '2024-06-24 22:33:08', '2024-06-24 22:48:27');
 
 -- --------------------------------------------------------
 
@@ -142,12 +222,19 @@ CREATE TABLE `nurse_list` (
 --
 
 INSERT INTO `nurse_list` (`id`, `fullname`, `specialization`, `email`, `contact`, `delete_flag`, `date_created`, `date_added`) VALUES
-(7, 'Nurse RN1', '', '', '', 0, '2023-05-10 20:32:40', '2024-05-10 01:52:52'),
+(7, 'Nurse RN1', 'nurse', 'nurse@rn.com', '09285243690', 0, '2023-05-10 20:32:40', '2024-06-22 06:40:25'),
 (8, 'example nurse', 'example nurse', 'example nurse', 'example nurse', 1, '2023-06-15 16:00:02', '2024-05-08 19:30:04'),
-(9, 'Nurse RN2', '', '', '', 0, '2024-05-10 00:04:15', '2024-05-10 01:53:02'),
-(10, 'Nurse RN3', '', '', '', 0, '2024-05-10 00:05:47', '2024-05-10 01:53:12'),
+(9, 'Nurse RN2', 'nurse', '', '', 0, '2024-05-10 00:04:15', '2024-06-22 06:40:31'),
+(10, 'Nurse RN3', 'nurse', '', '', 0, '2024-05-10 00:05:47', '2024-06-22 06:40:39'),
 (11, 'Nurse RN4', '', '', '', 1, '2024-05-10 00:05:54', '2024-05-10 02:00:10'),
-(12, 'Nurse RN4', '', '', '', 0, '2024-06-09 03:06:38', NULL);
+(12, 'Nurse RN4', 'nurse', '', '', 0, '2024-06-09 03:06:38', '2024-06-22 06:40:42'),
+(13, 'Nurse RN5', 'nurse', '', '', 0, '2024-06-22 05:37:15', '2024-06-22 06:40:46'),
+(14, 'Nurse RN6', 'nurse', '', '', 0, '2024-06-22 05:37:24', '2024-06-22 06:40:50'),
+(15, 'Nurse RN7', 'nurse', '', '', 0, '2024-06-22 05:37:33', '2024-06-22 06:40:55'),
+(16, 'Nurse RN8', 'nurse', '', '', 0, '2024-06-22 05:37:44', '2024-06-22 06:42:17'),
+(17, 'Nursing Aid RNAID1', 'nursing aid', '', '', 0, '2024-06-22 06:40:12', NULL),
+(18, 'Head Nurse HRN1', 'nursing supervisor', '', '', 0, '2024-06-22 06:43:10', NULL),
+(19, 'Nursing Aid RNAID2', 'nursing aid', '', '', 0, '2024-06-22 06:43:47', '2024-06-22 06:44:05');
 
 -- --------------------------------------------------------
 
@@ -166,114 +253,96 @@ CREATE TABLE `patient_details` (
 --
 
 INSERT INTO `patient_details` (`patient_id`, `meta_field`, `meta_value`) VALUES
-(2, 'firstname', 'John'),
-(2, 'middlename', ''),
-(2, 'lastname', 'Doe'),
-(2, 'suffix', ''),
-(2, 'gender', 'Male'),
-(2, 'dob', '1991-10-15'),
-(2, 'email', 'jd@gmail.com'),
-(2, 'contact', '123456789'),
-(2, 'address', 'Quezon City'),
-(3, 'firstname', 'Jane '),
-(3, 'middlename', ''),
-(3, 'lastname', 'Doe'),
-(3, 'suffix', ''),
-(3, 'gender', 'Female'),
-(3, 'dob', '1990-10-04'),
-(3, 'email', 'jd1@gmail.com'),
-(3, 'contact', '123456789'),
-(3, 'address', 'Quezon City'),
-(1, 'firstname', 'Mark'),
-(1, 'middlename', 'Makisig'),
-(1, 'lastname', 'Malakas'),
-(1, 'suffix', ''),
-(1, 'gender', 'Male'),
-(1, 'dob', '1987-08-02'),
-(1, 'email', 'mm2@gmail.com'),
-(1, 'contact', '1234567890'),
-(1, 'address', 'Quezon City'),
-(4, 'firstname', 'JANE'),
-(4, 'middlename', ''),
-(4, 'lastname', 'DOE'),
-(4, 'suffix', ''),
-(4, 'gender', 'Female'),
-(4, 'dob', ''),
-(4, 'email', ''),
-(4, 'contact', ''),
-(4, 'address', ''),
-(6, 'firstname', 'Patient2'),
-(6, 'middlename', ''),
-(6, 'lastname', 'Sample'),
-(6, 'suffix', ''),
-(6, 'gender', 'Male'),
-(6, 'dob', ''),
-(6, 'email', ''),
-(6, 'contact', ''),
-(6, 'address', ''),
-(5, 'firstname', 'patient1'),
-(5, 'middlename', ''),
-(5, 'lastname', 'sample'),
-(5, 'suffix', ''),
-(5, 'gender', 'Male'),
-(5, 'dob', '1970-01-01'),
-(5, 'email', ''),
-(5, 'contact', ''),
-(5, 'address', ''),
-(7, 'firstname', 'patient3'),
-(7, 'middlename', ''),
-(7, 'lastname', 'sample'),
-(7, 'suffix', ''),
-(7, 'gender', 'Male'),
-(7, 'dob', ''),
-(7, 'email', ''),
-(7, 'contact', ''),
-(7, 'address', ''),
-(8, 'firstname', 'patient4'),
-(8, 'middlename', ''),
-(8, 'lastname', 'sample'),
-(8, 'suffix', ''),
-(8, 'gender', 'Male'),
-(8, 'dob', ''),
-(8, 'email', ''),
-(8, 'contact', ''),
-(8, 'address', ''),
-(9, 'firstname', 'patient5'),
-(9, 'middlename', ''),
-(9, 'lastname', 'sample'),
-(9, 'suffix', ''),
-(9, 'gender', 'Male'),
-(9, 'dob', ''),
-(9, 'email', ''),
-(9, 'contact', ''),
-(9, 'address', ''),
-(10, 'firstname', 'patient6'),
-(10, 'middlename', ''),
-(10, 'lastname', 'sample'),
-(10, 'suffix', ''),
-(10, 'gender', 'Male'),
-(10, 'dob', ''),
-(10, 'email', ''),
-(10, 'contact', ''),
-(10, 'address', ''),
-(12, 'firstname', 'PATIENT8'),
-(12, 'middlename', ''),
-(12, 'lastname', 'SAMPLE '),
-(12, 'suffix', ''),
-(12, 'gender', 'Male'),
-(12, 'dob', ''),
-(12, 'email', ''),
-(12, 'contact', ''),
-(12, 'address', ''),
-(13, 'firstname', 'Patient8'),
-(13, 'middlename', ''),
-(13, 'lastname', 'Sample'),
-(13, 'suffix', ''),
-(13, 'gender', 'Male'),
-(13, 'dob', ''),
-(13, 'email', ''),
-(13, 'contact', ''),
-(13, 'address', '');
+(19, 'firstname', 'PATIENT2'),
+(19, 'middlename', ''),
+(19, 'lastname', 'SAMPLE'),
+(19, 'suffix', ''),
+(19, 'gender', 'Male'),
+(19, 'dob', ''),
+(19, 'email', ''),
+(19, 'contact', ''),
+(19, 'address', ''),
+(20, 'firstname', 'PATIENT3'),
+(20, 'middlename', ''),
+(20, 'lastname', 'SAMPLE'),
+(20, 'suffix', ''),
+(20, 'gender', 'Male'),
+(20, 'dob', ''),
+(20, 'email', 'jazz41.jazz04@gmail.com'),
+(20, 'contact', '09285243690'),
+(20, 'address', ''),
+(21, 'firstname', 'PATIENT4'),
+(21, 'middlename', ''),
+(21, 'lastname', 'SAMPLE'),
+(21, 'suffix', ''),
+(21, 'gender', 'Male'),
+(21, 'dob', ''),
+(21, 'email', ''),
+(21, 'contact', ''),
+(21, 'address', ''),
+(22, 'firstname', 'PATIENT5'),
+(22, 'middlename', ''),
+(22, 'lastname', 'SAMPLE'),
+(22, 'suffix', ''),
+(22, 'gender', 'Male'),
+(22, 'dob', ''),
+(22, 'email', ''),
+(22, 'contact', ''),
+(22, 'address', ''),
+(23, 'firstname', 'PATIENT6'),
+(23, 'middlename', ''),
+(23, 'lastname', 'SAMPLE'),
+(23, 'suffix', ''),
+(23, 'gender', 'Male'),
+(23, 'dob', ''),
+(23, 'email', ''),
+(23, 'contact', ''),
+(23, 'address', ''),
+(26, 'firstname', 'PATIENT7'),
+(26, 'middlename', ''),
+(26, 'lastname', 'SAMPLE'),
+(26, 'suffix', ''),
+(26, 'gender', 'Male'),
+(26, 'dob', ''),
+(26, 'email', ''),
+(26, 'contact', ''),
+(26, 'address', ''),
+(27, 'firstname', 'PATIENT8'),
+(27, 'middlename', ''),
+(27, 'lastname', 'SAMPLE'),
+(27, 'suffix', ''),
+(27, 'gender', 'Male'),
+(27, 'dob', ''),
+(27, 'email', ''),
+(27, 'contact', ''),
+(27, 'address', ''),
+(28, 'firstname', 'PATIENT9'),
+(28, 'middlename', ''),
+(28, 'lastname', 'SAMPLE'),
+(28, 'suffix', ''),
+(28, 'gender', 'Male'),
+(28, 'dob', ''),
+(28, 'email', ''),
+(28, 'contact', ''),
+(28, 'address', ''),
+(18, 'firstname', 'PATIENT1'),
+(18, 'middlename', 'MNU'),
+(18, 'lastname', 'SAMPLE'),
+(18, 'suffix', ''),
+(18, 'gender', 'Male'),
+(18, 'dob', '1991-10-15'),
+(18, 'email', 'patient@patient.com'),
+(18, 'contact', '09285243690'),
+(18, 'address', 'B2 L9 Magnolia St., West Fairview Park Subd. Fairview'),
+(36, 'firstname', 'PATIENT'),
+(36, 'middlename', 'MNU'),
+(36, 'lastname', 'SAMPLE'),
+(36, 'suffix', ''),
+(36, 'gender', 'Male'),
+(36, 'dob', '1991-10-15'),
+(36, 'email', 'patient@patient.com'),
+(36, 'contact', '09285243690'),
+(36, 'address', 'B2 L9 Magnolia St., West Fairview Park Subd. Fairview');
 
 -- --------------------------------------------------------
 
@@ -292,6 +361,14 @@ CREATE TABLE `patient_history` (
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `date_updated` datetime DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `patient_history`
+--
+
+INSERT INTO `patient_history` (`id`, `patient_id`, `illness`, `diagnosis`, `treatment`, `remarks`, `doctor_id`, `date_created`, `date_updated`) VALUES
+(12, 18, 'cephalalgia/acute migraine.', 'severe headaches.', 'provide pain medication.\r\nRX. \r\nRM PARACETAMOL 500 MG TAB, \r\nRM MEFENAMIC ACID 500 MG TAB.', 'the patient has no history of severe illness.\r\nfamily history includes relatives diagnosed with high blood pressure and diabetes.\r\nthe patient has a normal temperature, pulse rate, and respiratory rate.\r\nblood pressure is slightly elevated but within normal range.\r\nfor observation if blood pressure continues to fluctuate.\r\n', 17, '2024-06-22 06:05:54', '2024-06-22 06:13:48'),
+(13, 36, 'physical trauma', 'physical injuries to the head and extremities', 'admit to the emergency room for urgent care', 'blunt force trauma to the head and extremities.\r\nprovided pain medication and IV fluids.', 17, '2024-06-22 06:52:32', NULL);
 
 -- --------------------------------------------------------
 
@@ -314,19 +391,84 @@ CREATE TABLE `patient_list` (
 --
 
 INSERT INTO `patient_list` (`id`, `code`, `fullname`, `status`, `delete_flag`, `date_created`, `date_updated`) VALUES
-(1, 'PA-2021120001', 'MALAKAS MARK MAKISIG', 0, 1, '2021-12-30 12:00:44', '2024-05-10 00:06:06'),
-(2, 'PA-2023050001', 'DOE JOHN', 0, 1, '2023-05-08 20:49:49', '2024-05-08 19:29:57'),
-(3, 'PA-2023050002', 'DOE JANE ', 0, 1, '2023-05-08 20:54:43', '2024-05-08 19:29:52'),
-(4, 'PA-2023070001', 'DOE JANE', 0, 1, '2023-07-18 02:48:07', '2024-05-08 19:29:54'),
-(5, 'PA-2024050001', 'SAMPLE PATIENT1', 0, 0, '2024-05-10 00:05:08', '2024-05-10 00:06:40'),
-(6, 'PA-2024050002', 'SAMPLE PATIENT2', 0, 0, '2024-05-10 00:06:22', NULL),
-(7, 'PA-2024050003', 'SAMPLE PATIENT3', 0, 0, '2024-05-10 00:18:38', NULL),
-(8, 'PA-2024050004', 'SAMPLE PATIENT4', 0, 0, '2024-05-10 00:18:56', NULL),
-(9, 'PA-2024050005', 'SAMPLE PATIENT5', 0, 0, '2024-05-10 01:46:53', NULL),
-(10, 'PA-2024050006', 'SAMPLE PATIENT6', 0, 0, '2024-05-10 01:47:20', NULL),
-(11, 'PA-2024050007', 'SAMPLE PATIENT7', 0, 0, '2024-05-10 01:47:51', NULL),
-(12, 'PA-2024060001', 'SAMPLE  PATIENT8', 0, 1, '2024-06-09 03:07:03', '2024-06-09 03:07:29'),
-(13, 'PA-2024060002', 'SAMPLE PATIENT8', 0, 0, '2024-06-09 03:07:52', NULL);
+(18, 'PA-2024060001', 'SAMPLE PATIENT1 MNU', 0, 0, '2024-06-22 05:45:38', '2024-06-22 06:08:01'),
+(19, 'PA-2024060002', 'SAMPLE PATIENT2', 0, 0, '2024-06-22 05:45:56', NULL),
+(20, 'PA-2024060003', 'SAMPLE PATIENT3', 0, 0, '2024-06-22 05:46:08', NULL),
+(21, 'PA-2024060004', 'SAMPLE PATIENT4', 0, 0, '2024-06-22 05:46:19', NULL),
+(22, 'PA-2024060005', 'SAMPLE PATIENT5', 0, 0, '2024-06-22 05:46:36', NULL),
+(23, 'PA-2024060006', 'SAMPLE PATIENT6', 0, 0, '2024-06-22 05:47:14', NULL),
+(26, 'PA-2024060007', 'SAMPLE PATIENT7', 0, 0, '2024-06-22 05:49:30', NULL),
+(27, 'PA-2024060008', 'SAMPLE PATIENT8', 0, 0, '2024-06-22 05:49:47', NULL),
+(28, 'PA-2024060009', 'SAMPLE PATIENT9', 0, 0, '2024-06-22 05:50:04', NULL),
+(36, 'PA-2024060010', 'SAMPLE PATIENT MNU', 0, 0, '2024-06-22 06:47:53', '2024-06-22 06:49:15');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payments`
+--
+
+CREATE TABLE `payments` (
+  `payment_id` int(11) NOT NULL,
+  `patient_id` int(11) DEFAULT NULL,
+  `code` varchar(100) NOT NULL,
+  `patient_name` varchar(255) DEFAULT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `payment_method` varchar(50) NOT NULL,
+  `payment_status` varchar(255) DEFAULT NULL,
+  `payment_date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `payments`
+--
+
+INSERT INTO `payments` (`payment_id`, `patient_id`, `code`, `patient_name`, `amount`, `payment_method`, `payment_status`, `payment_date`) VALUES
+(1, 18, '', 'SAMPLE PATIENT MNU', 1.00, 'gcash', 'Pending', '2024-06-24 06:12:43'),
+(3, 18, '', 'SAMPLE PATIENT MNU', 10.00, 'gcash', 'Pending', '2024-06-24 19:00:15'),
+(4, 18, '', 'SAMPLE PATIENT MNU', 10.00, 'gcash', 'Pending', '2024-06-24 19:01:03');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `prescriptions`
+--
+
+CREATE TABLE `prescriptions` (
+  `id` int(11) NOT NULL,
+  `patient_id` int(11) DEFAULT NULL,
+  `medication_name` varchar(100) DEFAULT NULL,
+  `dosage` varchar(100) DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `interval_hours` int(11) DEFAULT NULL,
+  `doctor_id` int(11) DEFAULT NULL,
+  `notes` text DEFAULT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `prescriptions`
+--
+
+INSERT INTO `prescriptions` (`id`, `patient_id`, `medication_name`, `dosage`, `start_date`, `end_date`, `interval_hours`, `doctor_id`, `notes`, `user_id`) VALUES
+(38, NULL, 'amoxicilin', '1 every 8 hours', '2024-06-24', '2024-06-28', 8, 17, 'x', 18),
+(39, NULL, 'amoxicilin', '1 every 8 hours', '2024-06-25', '2024-06-27', 8, 17, 'x', 20),
+(40, NULL, 'amoxicilin', '1 every 8 hours', '2024-06-25', '2024-06-28', 8, 17, 'x', 21),
+(41, NULL, 'amoxicilin', '1 every 8 hours', '2024-06-25', '2024-06-28', 8, 17, 'x', 21);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reminders`
+--
+
+CREATE TABLE `reminders` (
+  `id` int(11) NOT NULL,
+  `prescription_id` int(11) DEFAULT NULL,
+  `reminder_time` datetime DEFAULT NULL,
+  `sent` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -350,12 +492,13 @@ CREATE TABLE `room_list` (
 --
 
 INSERT INTO `room_list` (`id`, `room_type_id`, `name`, `description`, `capacity`, `delete_flag`, `date_created`, `date_updated`) VALUES
-(1, 3, 'Room-201', 'Sample Ward Room Good for 6 Patient', 6, 0, '2021-12-30 10:33:24', '2021-12-30 10:34:36'),
+(1, 3, 'Room-201', 'Sample Ward Good for 6 Patients', 6, 0, '2021-12-30 10:33:24', '2024-06-22 06:36:13'),
 (2, 1, 'Room-301', 'Sample Single Bed Room', 1, 0, '2021-12-30 10:33:46', NULL),
 (3, 2, 'Room-302', 'Sample 2 Bed Room', 2, 0, '2021-12-30 10:34:06', NULL),
-(4, 4, 'Room-202', 'Sample Ward Good 12 Patents', 12, 0, '2021-12-30 10:35:01', NULL),
+(4, 4, 'Room-202', 'Sample Ward Good for 12 Patents', 12, 0, '2021-12-30 10:35:01', '2024-06-22 06:36:17'),
 (5, 4, 'Room-303', 'Sample Deleted Room', 101, 1, '2021-12-30 10:35:19', '2021-12-30 10:35:52'),
-(7, 2, 'aaa', '', 0, 1, '2023-05-09 19:55:29', '2023-05-09 19:55:48');
+(8, 6, 'Room-404', 'Sample 24/7 Emergency Room with 24 Beds', 24, 0, '2024-06-22 06:34:44', NULL),
+(9, 8, 'test', 'test', 1, 1, '2024-06-24 23:21:09', '2024-06-24 23:21:37');
 
 -- --------------------------------------------------------
 
@@ -377,11 +520,14 @@ CREATE TABLE `room_type_list` (
 --
 
 INSERT INTO `room_type_list` (`id`, `room`, `description`, `delete_flag`, `date_created`, `date_updated`) VALUES
-(1, 'Single Room', 'Private Room with Single Patient Bed.', 0, '2021-12-30 10:05:45', NULL),
-(2, '2 Bed Room', 'Private Room with 2 Bed Room.', 0, '2021-12-30 10:10:56', NULL),
-(3, 'Ward 6', 'Ward Room With 6 Beds', 0, '2021-12-30 10:11:54', NULL),
-(4, 'Ward 12', 'Ward Room with 12 Bed Space', 0, '2021-12-30 10:12:38', NULL),
-(5, 'ward 32', 'Sample Deleted Room Type', 1, '2021-12-30 10:19:17', '2021-12-30 10:19:22');
+(1, 'Single Room', 'Private Room with Single Patient Bed', 0, '2021-12-30 10:05:45', '2024-06-22 06:37:03'),
+(2, '2 Bed Room', 'Private Room with 2 Bed Room', 0, '2021-12-30 10:10:56', '2024-06-22 06:36:57'),
+(3, 'Ward 6', 'Ward Room with 6 Beds', 0, '2021-12-30 10:11:54', '2024-06-22 06:37:09'),
+(4, 'Ward 12', 'Ward Room with 12 Beds', 0, '2021-12-30 10:12:38', '2024-06-22 06:37:07'),
+(5, 'ward 32', 'Sample Deleted Room Type', 1, '2021-12-30 10:19:17', '2021-12-30 10:19:22'),
+(6, '24/7 Emergency Room', 'Emergency Room with a 24 Bed Capacity', 0, '2024-06-22 06:31:58', '2024-06-22 06:37:00'),
+(7, 'test', 'test', 1, '2024-06-24 18:00:24', '2024-06-24 18:00:28'),
+(8, 'test', 'test', 1, '2024-06-24 23:21:01', '2024-06-24 23:21:18');
 
 -- --------------------------------------------------------
 
@@ -430,7 +576,7 @@ CREATE TABLE `timekeeping` (
 --
 
 INSERT INTO `timekeeping` (`id`, `user_id`, `time_in`, `time_out`) VALUES
-(24, 0, '2024-06-08 04:41:58', '0000-00-00 00:00:00');
+(29, 1411, '2024-06-17 18:06:36', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -464,7 +610,8 @@ INSERT INTO `users` (`id`, `firstname`, `middlename`, `lastname`, `username`, `p
 (5, 'Charl Stevene', NULL, 'Cadigoy', 'herocdgy', '0192023a7bbd73250516f069df18b500', '', '', 'uploads\\Charl_Avatar.png', NULL, '1', 1, '2023-05-08 14:05:45', '2024-06-08 00:07:35'),
 (6, 'Matthew Luis', NULL, 'Serrano', 'matthewluis', '0192023a7bbd73250516f069df18b500', '', '', 'uploads\\Matt_Avatar.png', NULL, '1', 1, '2023-05-09 17:01:12', '2024-06-08 00:07:41'),
 (8, 'Jassim Phillip', NULL, 'Tagarda', 'jazz41jazz04', '0192023a7bbd73250516f069df18b500', '', '', 'uploads\\Jass_Avatar.png', NULL, '1', 1, '2023-05-09 23:07:53', '2024-06-08 02:29:12'),
-(24, 'Test', NULL, 'Patient', 'testpatient', '81dc9bdb52d04dc20036dbd8313ed055', 'test@patient.com', '09285243690', NULL, NULL, '2', 1, '2024-06-09 08:39:57', '2024-06-09 08:42:23');
+(24, 'Test', NULL, 'Patient', 'testpatient', '81dc9bdb52d04dc20036dbd8313ed055', 'test@patient.com', '09285243690', NULL, NULL, '2', 1, '2024-06-09 08:39:57', '2024-06-09 08:42:23'),
+(27, 'Test', NULL, 'Doctor', 'testdoctor', '81dc9bdb52d04dc20036dbd8313ed055', 'md@md.com', '09285243690', NULL, NULL, '0', 1, '2024-06-23 12:51:56', '2024-06-23 20:14:45');
 
 --
 -- Indexes for dumped tables
@@ -497,6 +644,25 @@ ALTER TABLE `doctor_list`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `equipment_type_list`
+--
+ALTER TABLE `equipment_type_list`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `hospital_staff`
+--
+ALTER TABLE `hospital_staff`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `inventory`
+--
+ALTER TABLE `inventory`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `equipment_type_id` (`equipment_type_id`);
+
+--
 -- Indexes for table `nurse_list`
 --
 ALTER TABLE `nurse_list`
@@ -521,6 +687,27 @@ ALTER TABLE `patient_history`
 --
 ALTER TABLE `patient_list`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `payments`
+--
+ALTER TABLE `payments`
+  ADD PRIMARY KEY (`payment_id`),
+  ADD KEY `patient_id` (`patient_id`);
+
+--
+-- Indexes for table `prescriptions`
+--
+ALTER TABLE `prescriptions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`patient_id`);
+
+--
+-- Indexes for table `reminders`
+--
+ALTER TABLE `reminders`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `prescription_id` (`prescription_id`);
 
 --
 -- Indexes for table `room_list`
@@ -561,7 +748,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `admission_history`
 --
 ALTER TABLE `admission_history`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `ahp_list`
@@ -579,37 +766,73 @@ ALTER TABLE `appointments`
 -- AUTO_INCREMENT for table `doctor_list`
 --
 ALTER TABLE `doctor_list`
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT for table `equipment_type_list`
+--
+ALTER TABLE `equipment_type_list`
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `hospital_staff`
+--
+ALTER TABLE `hospital_staff`
   MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `inventory`
+--
+ALTER TABLE `inventory`
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `nurse_list`
 --
 ALTER TABLE `nurse_list`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `patient_history`
 --
 ALTER TABLE `patient_history`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `patient_list`
 --
 ALTER TABLE `patient_list`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+
+--
+-- AUTO_INCREMENT for table `payments`
+--
+ALTER TABLE `payments`
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `prescriptions`
+--
+ALTER TABLE `prescriptions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+
+--
+-- AUTO_INCREMENT for table `reminders`
+--
+ALTER TABLE `reminders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `room_list`
 --
 ALTER TABLE `room_list`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `room_type_list`
 --
 ALTER TABLE `room_type_list`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `system_info`
@@ -621,13 +844,13 @@ ALTER TABLE `system_info`
 -- AUTO_INCREMENT for table `timekeeping`
 --
 ALTER TABLE `timekeeping`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- Constraints for dumped tables
@@ -641,6 +864,12 @@ ALTER TABLE `admission_history`
   ADD CONSTRAINT `admission_history_ibfk_3` FOREIGN KEY (`patient_id`) REFERENCES `patient_list` (`id`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `inventory`
+--
+ALTER TABLE `inventory`
+  ADD CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`equipment_type_id`) REFERENCES `equipment_type_list` (`id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `patient_details`
 --
 ALTER TABLE `patient_details`
@@ -652,6 +881,24 @@ ALTER TABLE `patient_details`
 ALTER TABLE `patient_history`
   ADD CONSTRAINT `patient_history_ibfk_1` FOREIGN KEY (`doctor_id`) REFERENCES `doctor_list` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `patient_history_ibfk_2` FOREIGN KEY (`patient_id`) REFERENCES `patient_list` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `payments`
+--
+ALTER TABLE `payments`
+  ADD CONSTRAINT `payments_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patient_list` (`id`);
+
+--
+-- Constraints for table `prescriptions`
+--
+ALTER TABLE `prescriptions`
+  ADD CONSTRAINT `prescriptions_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `reminders`
+--
+ALTER TABLE `reminders`
+  ADD CONSTRAINT `reminders_ibfk_1` FOREIGN KEY (`prescription_id`) REFERENCES `prescriptions` (`id`);
 
 --
 -- Constraints for table `room_list`
