@@ -59,6 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST['get_patient_details']
     $notes = $_POST['notes'];
     $patient_email = isset($_POST['patient_email']) ? $_POST['patient_email'] : null;
     $patient_contact = isset($_POST['patient_contact']) ? $_POST['patient_contact'] : null;
+    $send_notifications = isset($_POST['send_notifications']) ? $_POST['send_notifications'] : '0'; // Default to '0'
 
     // Get patient id from patient_list based on code
     $sql_patient = "SELECT id FROM patient_list WHERE code = '$patient_code'";
@@ -184,6 +185,12 @@ echo "<hr>"; // Add a strong horizontal line here
         <div class="form-group mb-4">
             <label for="notes">Notes:</label>
             <textarea id="notes" name="notes" class="form-control"></textarea>
+        </div>
+
+        <div class="form-group mb-4">
+            <label>
+                <input type="radio" name="send_notifications" value="1"> Send Prescription Assistance Notifications To Patient Automatically?
+            </label>
         </div>
  
         <button type="submit" class="btn btn-primary">Add Prescription</button>

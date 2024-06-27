@@ -5,7 +5,7 @@ $password = "";
 $dbname = "hprms_db";
 
 // Create connection
-$conn = new mysqli('localhost', 'root', '', 'hprms_db');
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $newMessage = $_POST['new_message'];
             $newDateTime = $_POST['new_date_time'];
 
-            $updateStmt = $conn->prepare("UPDATE appointments SET message = ?, appointment_date = ? WHERE id = ?");
+            $updateStmt = $conn->prepare("UPDATE message_list SET message = ?, appointment_date = ? WHERE id = ?");
             $updateStmt->bind_param("ssi", $newMessage, $newDateTime, $selectedAppointment);
 
             if ($updateStmt->execute()) {
@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $resultHTML = "Invalid email address. Please enter a valid email.";
             } else {
                 // Check if reference number exists in the database
-                $stmt = $conn->prepare("SELECT * FROM appointments WHERE email = ? OR id = ?");
+                $stmt = $conn->prepare("SELECT * FROM message_list WHERE email = ? OR id = ?");
                 $stmt->bind_param("ss", $email, $referenceNumber);
 
                 if ($stmt->execute()) {
@@ -59,10 +59,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $resultHTML .= "<form method='post'>"; // Form to handle update
                         $resultHTML .= "<div class='table-container'>";
                         $resultHTML .= "<table border='1' style='width: 100%; margin-top: 20px;'>";
-                        $resultHTML .= "<tr><th>Select</th><th>Email</th><th>Reference Number</th><th>Message</th><th>Appointment Date</th></tr>";
+                        $resultHTML .= "<tr><th>Select</th><th>Full Name</th><th>Email</th><th>Reference Number</th><th>Message</th><th>Appointment Date</th></tr>";
                         while ($row = $result->fetch_assoc()) {
                             $resultHTML .= "<tr>";
                             $resultHTML .= "<td><input type='radio' name='selected_appointment' value='" . htmlspecialchars($row['id']) . "' onchange='checkSelection()'></td>";
+                            $resultHTML .= "<td>" . htmlspecialchars($row['fullname']) . "</td>";
                             $resultHTML .= "<td>" . htmlspecialchars($row['email']) . "</td>";
                             $resultHTML .= "<td>" . htmlspecialchars($row['id']) . "</td>";
                             $resultHTML .= "<td>" . htmlspecialchars($row['message']) . "</td>";
@@ -78,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $resultHTML .= "<label for='new_date_time'>New Date and Time:</label>";
                         $resultHTML .= "<input type='datetime-local' id='new_date_time' name='new_date_time' required>";
                         $resultHTML .= "<br><br>";
-                        $resultHTML .= "<button type='submit' id='updateButton' name='update' enabled>Update Selected Appointment</button>";
+                        $resultHTML .= "<button type='submit' id='updateButton' name='update' disabled>Update Selected Appointment</button>";
                         $resultHTML .= "</form>";
                     } else {
                         $resultHTML = "Invalid email address or reference number. Please check and try again.";
@@ -173,9 +174,7 @@ $conn->close();
             font-weight: bold;
         }
     </style>
-    <!--JavaScript function to check if a radio button is selected--> 
-    <!--update this <<<<$resultHTML .= "<button type='submit' id='updateButton' name='update' enabled>Update Selected Appointment</button>";>>>>> 'from enabled to disabled'-->
-    <!--<script> 
+    <script> 
         function checkSelection() {
             // Get all radio buttons with name 'selected_appointment'
             const radioButtons = document.querySelectorAll('input[name="selected_appointment"]');
@@ -192,7 +191,7 @@ $conn->close();
             // Enable or disable the update button based on the radio button selection
             document.getElementById('updateButton').disabled = !isChecked;
         }
-    </script>-->
+    </script>
 </head>
 <body>
     <div class="container"> 

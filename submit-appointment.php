@@ -1,11 +1,11 @@
 <?php
 $servername = "localhost";
-$username = "username";
-$password = "password";
+$username = "root";
+$password = "";
 $dbname = "hprms_db";
 
 // Create connection
-$conn = new mysqli('localhost', 'root', '', 'hprms_db');
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
@@ -20,10 +20,12 @@ $sex = $_POST['sex'];
 $appointmentDate = $_POST['appointment_date'];
 $message = $_POST['message'];
 
-// Prepare and bind
-$stmt = $conn->prepare("INSERT INTO appointments (first_name, last_name, email, mobile, sex, appointment_date, message) VALUES (?, ?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("sssssss", $firstName, $lastName, $email, $mobile, $sex, $appointmentDate, $message);
+// Create fullname
+$fullname = $firstName . ' ' . $lastName;
 
+// Prepare and bind
+$stmt = $conn->prepare("INSERT INTO message_list (fullname, first_name, last_name, email, mobile, sex, appointment_date, message) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+$stmt->bind_param("ssssssss", $fullname, $firstName, $lastName, $email, $mobile, $sex, $appointmentDate, $message);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -73,50 +75,49 @@ $stmt->bind_param("sssssss", $firstName, $lastName, $email, $mobile, $sex, $appo
         }
     </style>
 </head>
+<body>
+    <div class="container">
+        <?php
+        // Check if email already exists in the appointments table
+        $checkEmailQuery = "SELECT id FROM message_list WHERE email = ?";
+        $checkEmailStmt = $conn->prepare($checkEmailQuery);
+        if (!$checkEmailStmt) {
+            die("Error: " . $conn->error);
+        }
+        $checkEmailStmt->bind_param("s", $email);
+        $checkEmailStmt->execute();
+        $checkEmailResult = $checkEmailStmt->get_result();
 
-    <body>
-        <div class="container">
-            <?php
-            // Check if email already exists in the appointments table
-            $checkEmailQuery = "SELECT id FROM appointments WHERE email = ?";
-            $checkEmailStmt = $conn->prepare($checkEmailQuery);
-            if (!$checkEmailStmt) {
-                die("Error: " . $conn->error);
-            }
-            $checkEmailStmt->bind_param("s", $email);
-            $checkEmailStmt->execute();
-            $checkEmailResult = $checkEmailStmt->get_result();
-
-            if ($checkEmailResult->num_rows > 0) {
-                // Email already exists, update the existing appointment
-                $existingAppointment = $checkEmailResult->fetch_assoc();
-                $existingReferenceNumber = $existingAppointment['id'];
-                echo "<h1>Error! Duplicate Appointment</h1>";
-                echo "<p>An appointment with this email already exists.</p>";
-                echo "<p>Please update your existing appointment with reference number: $existingReferenceNumber</p>";
-                echo "<button onclick=\"window.location.href = './update-appointment.php';\">Update Appointment</button>";
+        if ($checkEmailResult->num_rows > 0) {
+            // Email already exists, update the existing appointment
+            $existingAppointment = $checkEmailResult->fetch_assoc();
+            $existingReferenceNumber = $existingAppointment['id'];
+            echo "<h1>Error! Duplicate Appointment</h1>";
+            echo "<p>An appointment with this email already exists.</p>";
+            echo "<p>Please update your existing appointment with reference number: $existingReferenceNumber</p>";
+            echo "<button onclick=\"window.location.href = './update-appointment.php';\">Update Appointment</button>";
+        } else {
+            // Email does not exist, proceed with inserting the new appointment
+            if ($stmt->execute()) {
+                echo "<h1>Success!</h1>";
+                // Get the auto-generated reference number
+                $referenceNumber = $stmt->insert_id;
+                echo "<p>Appointment successfully submitted</p>";
+                echo "<p>Your reference number is: $referenceNumber</p>";
+                echo "<p>We will send your schedule confirmation</p>"; 
+                echo "<p>To your email: $email</p>";
+                echo "<p>Within 24HRS.</p>";
             } else {
-                // Email does not exist, proceed with inserting the new appointment
-                if ($stmt->execute()) {
-                    echo "<h1>Success!</h1>";
-                    // Get the auto-generated reference number
-                    $referenceNumber = $stmt->insert_id;
-                    echo "<p>Appointment successfully submitted</p>";
-                    echo "<p>Your reference number is: $referenceNumber</p>";
-                    echo "<p>We will send your schedule confirmation</p>"; 
-                    echo "<p>To your email: $email</p>";
-                    echo "<p>Within 24HRS.</p>";
-                } else {
-                    echo "<h1>Error!</h1>";
-                    echo "<p>Error: " . $stmt->error . "</p>";
-                }
+                echo "<h1>Error!</h1>";
+                echo "<p>Error: " . $stmt->error . "</p>";
             }
+        }
 
-            $stmt->close();
-            $checkEmailStmt->close();
-            $conn->close();
-            ?>
-            <button onclick="window.location.href = './index-home.php';">Back to Home</button>
-        </div>
-    </body>
+        $stmt->close();
+        $checkEmailStmt->close();
+        $conn->close();
+        ?>
+        <button onclick="window.location.href = './index-home.php';">Back to Home</button>
+    </div>
+</body>
 </html>

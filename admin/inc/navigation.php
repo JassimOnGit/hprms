@@ -33,6 +33,14 @@
                     </li>
                     <?php if($_settings->userdata('type') == 0 || $_settings->userdata('type') == 1): ?>
                     <li class="nav-item dropdown">                    
+                      <a href="<?php echo base_url ?>admin/?page=inquiries" class="nav-link nav-inquiries">
+                        <i class="nav-icon fas fa-inbox"></i>
+                        <p>
+                          Inquiries
+                        </p>
+                      </a>
+                    </li>
+                    <li class="nav-item dropdown">                    
                       <a href="<?php echo base_url ?>admin/?page=timekeeping" class="nav-link nav-timekeeping">
                         <i class="nav-icon fas fa-user-clock"></i>
                         <p>
@@ -40,7 +48,9 @@
                         </p>
                       </a>
                     </li>
+                    <?php endif; ?>
                     <li class="nav-header">Medical</li>
+                    <?php if($_settings->userdata('type') == 0 || $_settings->userdata('type') == 1): ?>
                     <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=patients" class="nav-link nav-patients">
                         <i class="nav-icon fas fa-user-injured"></i>
@@ -66,7 +76,7 @@
                       </a>
                     </li>
                     <?php endif; ?>
-                    <?php if($_settings->userdata('type') == 0 || $_settings->userdata('type') == 1 || $_settings->userdata('type') == 2): ?>
+                    <?php if($_settings->userdata('type') == 1 || $_settings->userdata('type') == 2): ?>
                     <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=patient_records" class="nav-link nav-patient_records">
                         <i class="nav-icon fas fa-clipboard"></i>
@@ -94,8 +104,8 @@
                       </a>
                     </li>
                     <?php endif; ?>
-                    <?php if($_settings->userdata('type') == 0 || $_settings->userdata('type') == 1 || $_settings->userdata('type') == 2): ?>
                     <li class="nav-header">Emergency</li>
+                    <?php if($_settings->userdata('type') == 1 || $_settings->userdata('type') == 2): ?>
                     <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=emergency" class="nav-link nav-emergency">
                         <i class="nav-icon fa fa-heartbeat"></i>
@@ -104,6 +114,18 @@
                         </p>
                       </a>
                     </li>
+                    <?php endif; ?>
+                    <?php if($_settings->userdata('type') == 0 || $_settings->userdata('type') == 1): ?>
+                    <li class="nav-item dropdown">
+                      <a href="<?php echo base_url ?>admin/?page=emergency_doctor" class="nav-link nav-emergency_doctor">
+                        <i class="nav-icon fa fa-heartbeat"></i>
+                        <p>
+                          Emergency Room (MD)
+                        </p>
+                      </a>
+                    </li>
+                    <?php endif; ?>
+                    <?php if($_settings->userdata('type') == 0 || $_settings->userdata('type') == 1 || $_settings->userdata('type') == 2): ?>
                     <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=ambulance" class="nav-link nav-ambulance">
                         <i class="nav-icon fas fa-ambulance"></i>
@@ -112,7 +134,9 @@
                         </p>
                       </a>
                     </li>
+                    <?php endif; ?> 
                     <li class="nav-header">Administration</li>
+                    <?php if($_settings->userdata('type') == 1 || $_settings->userdata('type') == 2): ?>
                     <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=billing" class="nav-link nav-billing">
                         <i class="nav-icon fas fa-file-invoice-dollar"></i>
@@ -135,7 +159,7 @@
                       <a href="<?php echo base_url ?>admin/?page=equipment" class="nav-link nav-equipment">
                         <i class="nav-icon fas fa-microscope"></i>
                         <p>
-                          Equipment    
+                          Equipment/Items    
                         </p>
                       </a>
                     </li>

@@ -17,10 +17,12 @@
 			<table class="table table-hover table-striped">
 				<colgroup>
 					<col width="5%">
-					<col width="20%">
-					<col width="20%">
-					<col width="30%">
 					<col width="15%">
+					<col width="15%">
+					<col width="20%">
+					<col width="10%">
+					<col width="10%">
+					<col width="10%">
 					<col width="10%">
 				</colgroup>
 				<thead>
@@ -29,6 +31,8 @@
 						<th>Inquirer</th>
 						<th>Email</th>
 						<th>Message</th>
+						<th>Appointment Date</th>
+						<th>Date Created</th>
 						<th>Status</th>
 						<th>Action</th>
 					</tr>
@@ -44,6 +48,8 @@
 							<td><?php echo ucwords($row['fullname']) ?></td>
 							<td><?php echo ($row['email']) ?></td>
 							<td class="truncate-1"><?php echo ($row['message']) ?></td>
+							<td><?php echo ($row['appointment_date']) ?></td>
+							<td><?php echo ($row['date_created']) ?></td>
 							<td class="text-center">
 								<?php if($row['status'] == 1): ?>
 									<span class="badge badge-pill badge-success">Read</span>

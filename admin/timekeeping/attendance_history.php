@@ -1,6 +1,7 @@
 <?php
 // attendance_history.php
 echo "<h1 class='mb-4'>Attendance History</h1>";
+echo "<hr>"; // Add a strong horizontal line here
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Form was submitted - fetch data from database
@@ -34,13 +35,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Form was not submitted - display form
     echo '<form method="post" class="mb-4">
         <div class="form-group">
-            <label for="user_id">User ID:</label>
-            <input type="number" class="form-control" id="user_id" name="user_id">
+        <label for="user_id">Employee ID:</label>
+            <input type="number" class="form-control" id="user_id" name="user_id" required>
+            <small class="form-text text-muted">Please Enter your HRIS Employee I.D.</small>
         </div>
         <button type="submit" class="btn btn-primary">View Attendance History</button>
     </form>';
+    echo "<hr>"; // Add a strong horizontal line here
 }
 
 // Add a button that links back to the timekeeping page
 echo '<a href="index.php?page=timekeeping" class="btn btn-secondary mt-4">Back to Timekeeping</a>';
-
+echo "<hr>"; // Add a strong horizontal line here
+?>
