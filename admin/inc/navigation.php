@@ -125,7 +125,7 @@
                       </a>
                     </li>
                     <?php endif; ?>
-                    <?php if($_settings->userdata('type') == 0 || $_settings->userdata('type') == 1 || $_settings->userdata('type') == 2): ?>
+                    <?php if($_settings->userdata('type') == 1 || $_settings->userdata('type') == 2): ?>
                     <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=ambulance" class="nav-link nav-ambulance">
                         <i class="nav-icon fas fa-ambulance"></i>
@@ -134,6 +134,8 @@
                         </p>
                       </a>
                     </li>
+                    <?php endif; ?> 
+                    <?php if($_settings->userdata('type') == 0 || $_settings->userdata('type') == 1): ?>
                     <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=ambulance_doctor" class="nav-link nav-ambulance_doctor">
                         <i class="nav-icon fas fa-ambulance"></i>
