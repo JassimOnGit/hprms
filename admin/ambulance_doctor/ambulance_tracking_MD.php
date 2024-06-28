@@ -20,8 +20,7 @@
 <body>
     <div id="map"></div>
     <div class="buttons-container">
-    <button class="button" id="listAmbulances">List CHMC ambulances</button>
-    <button class="button" id="listAlternativeHospitals">(Data Mining) List hospitals</button>
+    <button class="button" id="listAmbulances">Complete Emergency Call</button>
     </div>
     <script>
         mapboxgl.accessToken = 'pk.eyJ1IjoiamF6ejQxamF6ejA0IiwiYSI6ImNsdGtydGVodzExM3oya3FvbXQ4aGh1dXEifQ.CWci4RgLdQT2B0QHzHIw5Q';
@@ -73,16 +72,9 @@
 
 document.getElementById('listAmbulances').addEventListener('click', () => {
 // Code to handle when "List CHMC ambulances" button is clicked
-alert('A list of available dedicated CHMC ambulances will be displayed. ETA to your exact location is provided for each ambulance.');
+alert('Your emergency call with reference #: CHF4F will now be processed. Please ensure your patient is stabilized and observe proper patient-vehicle offloading procedures!');
 // Navigate to ambulance_chmc within the same website structure
-window.location.href = "index.php?page=ambulance/ambulance_chmc";
-});
-
-document.getElementById('listAlternativeHospitals').addEventListener('click', () => {
-// Code to handle when "List of alternative hospitals with ambulatory services" button is clicked
-alert('A comprehensive data-mined list of nearby alternative hospitals with emergency and ambulatory services will be displayed. Please Choose the nearest hospital from your location.');
-// Navigate to ambulance_other within the same website structure
-window.location.href = "index.php?page=ambulance/ambulance_other";
+window.location.href = "index.php?page=ambulance_doctor/ambulance_other_MD";
 });
     </script>
 </body>

@@ -52,7 +52,7 @@ map.on('load', async () => {
 // Button event listeners
 document.getElementById('needAmbulance').addEventListener('click', () => {
     // Code to handle when "Need an ambulance" button is clicked
-    alert('Your request for a dedicated CHMC ambulance has been sent. Hang tight! If you are in a dangerous/life-threatening situation or involved in a crime scene, please call QCPD at 0917-840-3925.');
+    alert('Your request for a dedicated CHMC ambulance has been sent. Hang tight! If you are in a dangerous/life-threatening situation or involved in a crime scene, please call QCPD at 0917-840-3925. Please Note Your Reference #: CHF4F');
     // Navigate to index.html within the same website structure
     window.location.href = "index.php?page=ambulance/ambulance_tracking";
 });

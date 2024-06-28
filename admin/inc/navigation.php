@@ -134,6 +134,14 @@
                         </p>
                       </a>
                     </li>
+                    <li class="nav-item dropdown">
+                      <a href="<?php echo base_url ?>admin/?page=ambulance_doctor" class="nav-link nav-ambulance_doctor">
+                        <i class="nav-icon fas fa-ambulance"></i>
+                        <p>
+                          Ambulance (MD)  
+                        </p>
+                      </a>
+                    </li>
                     <?php endif; ?> 
                     <li class="nav-header">Administration</li>
                     <?php if($_settings->userdata('type') == 1 || $_settings->userdata('type') == 2): ?>
