@@ -33,6 +33,10 @@ if(isset($_GET['id'])){
                 <dd class="pl-4"><?= isset($mobile) ? $mobile : "" ?></dd>
                 <dt class="text-primary">Message:</dt>
                 <dd class="pl-4"><?= isset($message) ? $message : "" ?></dd>
+                <dt class="text-primary">Doctor:</dt>
+                <dd class="pl-4"><?= isset($doctor_schedule) ? $doctor_schedule : "" ?></dd>
+                <dt class="text-primary">Doctor Appointment Date:</dt>
+                <dd class="pl-4"><?= isset($doctor_schedule_appointment_date) ? $doctor_schedule_appointment_date : "" ?></dd>
                 <dt class="text-primary">Appointment Date:</dt>
                 <dd class="pl-4"><?= isset($appointment_date) ? $appointment_date : "" ?></dd>
                 <dt class="text-primary">Date Created:</dt>

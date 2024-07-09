@@ -17,13 +17,15 @@
 			<table class="table table-hover table-striped">
 				<colgroup>
 					<col width="5%">
+					<col width="12%">
+					<col width="12%">
 					<col width="15%">
-					<col width="15%">
-					<col width="20%">
+					<col width="12%">
+					<col width="12%">
 					<col width="10%">
 					<col width="10%">
-					<col width="10%">
-					<col width="10%">
+					<col width="6%">
+					<col width="6%">
 				</colgroup>
 				<thead>
 					<tr>
@@ -31,6 +33,8 @@
 						<th>Inquirer</th>
 						<th>Email</th>
 						<th>Message</th>
+						<th>Doctor</th>
+						<th>Doctor Appointment Date</th>
 						<th>Appointment Date</th>
 						<th>Date Created</th>
 						<th>Status</th>
@@ -48,6 +52,8 @@
 							<td><?php echo ucwords($row['fullname']) ?></td>
 							<td><?php echo ($row['email']) ?></td>
 							<td class="truncate-1"><?php echo ($row['message']) ?></td>
+							<td><?php echo ($row['doctor_schedule']) ?></td>
+							<td><?php echo ($row['doctor_schedule_appointment_date']) ?></td>
 							<td><?php echo ($row['appointment_date']) ?></td>
 							<td><?php echo ($row['date_created']) ?></td>
 							<td class="text-center">

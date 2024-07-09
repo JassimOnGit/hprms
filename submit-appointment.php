@@ -12,20 +12,22 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$firstName = $_POST['first_name'];
-$lastName = $_POST['last_name'];
-$email = $_POST['email'];
-$mobile = $_POST['mobile'];
-$sex = $_POST['sex'];
-$appointmentDate = $_POST['appointment_date'];
-$message = $_POST['message'];
+$firstName = $_POST['first_name'] ?? '';
+$lastName = $_POST['last_name'] ?? '';
+$email = $_POST['email'] ?? '';
+$mobile = $_POST['mobile'] ?? '';
+$sex = $_POST['sex'] ?? '';
+$doctor_schedule = $_POST['doctor_schedule'] ?? '';
+$doctor_schedule_appointment_date = $_POST['doctor_schedule_appointment_date'] ?? '';
+$appointmentDate = $_POST['appointment_date'] ?? '';
+$message = $_POST['message'] ?? '';
 
 // Create fullname
 $fullname = $firstName . ' ' . $lastName;
 
 // Prepare and bind
-$stmt = $conn->prepare("INSERT INTO message_list (fullname, first_name, last_name, email, mobile, sex, appointment_date, message) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("ssssssss", $fullname, $firstName, $lastName, $email, $mobile, $sex, $appointmentDate, $message);
+$stmt = $conn->prepare("INSERT INTO message_list (fullname, first_name, last_name, email, mobile, sex, doctor_schedule, doctor_schedule_appointment_date, appointment_date, message) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+$stmt->bind_param("ssssssssss", $fullname, $firstName, $lastName, $email, $mobile, $sex, $doctor_schedule, $doctor_schedule_appointment_date, $appointmentDate, $message);
 ?>
 <!DOCTYPE html>
 <html lang="en">

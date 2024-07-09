@@ -34,11 +34,90 @@
 				</tr>
 			</table>
 		</div>
-	</div>
-	
 	<div class="middle">
-		<div style="background-image:url('img/a.jpg');background-size: cover; background-position: center; height: 500px; width: 1200px;">
-		
+	<br>
+		<div style="text-align: center; background-image: url('img/a.gif'); background-size: cover; background-position: center; height: 1300px; width: 1300px; margin: 0 auto;">
+			<h1 style="font-family: 'Times New Roman'; text-shadow: 10px 10px 18px white;">Make an Appointment</h1>
+			<br>
+			<br>
+			<br>
+			<form method="POST" action="submit-appointment.php" onsubmit="return validateForm()">
+				<table style="margin: 0 auto;">
+					<tr>
+						<td style="text-align: left">
+							<label for="first_name" style="font-weight: bold; background-color: white; padding: 2px;">First Name</label><br>
+							<input type="text" id="first_name" name="first_name" placeholder="First Name" style="margin-right: 87px;">
+						</td>
+						<td style="text-align: left;">
+							<label for="last_name" style="font-weight: bold; background-color: white; padding: 2px;">Last Name</label><br>
+							<input type="text" id="last_name" name="last_name" placeholder="Last Name">
+						</td>
+					</tr>
+					<tr height="30px"></tr>
+					<tr>
+						<td style="text-align: left;">
+							<label for="email" style="font-weight: bold; background-color: white; padding: 2px;">Email Address</label><br>
+							<input type="text" id="email" name="email" placeholder="Email Address">
+						</td>
+						<td style="text-align: left;">
+							<label for="mobile" style="font-weight: bold; background-color: white; padding: 2px;">Mobile No.</label><br>
+							<input type="text" id="mobile" name="mobile" placeholder="Mobile No.">
+						</td>
+					</tr>
+					<tr height="30px"></tr>
+					<tr>
+						<td style="text-align: left;">
+							<label for="sex" style="font-weight: bold; background-color: white; padding: 2px;">Sex</label><br>
+							<select id="sex" name="sex" style="width: 280px;">
+								<option value=""> -- Sex -- </option>
+								<option value="Male"> Male </option>
+								<option value="Female"> Female </option>
+							</select>
+						</td>
+						<td style="text-align: left;">
+							<label for="doctor_schedule" style="font-weight: bold; background-color: white; padding: 2px;">Specific Doctor Appointment?</label><br>
+							<select id="doctor_schedule" name="doctor_schedule" placeholder="Specific Doctor Appointment?" style=" width: 280px;">
+								<option value=""> --Select Doctor-- </option>
+								<option value="Doctor MD1 (General Practitioner)"> Doctor MD1 (General Practitioner) </option>
+								<option value="Doctor MD2 (Pediatrician)"> Doctor MD2 (Pediatrician) </option>
+								<option value="Doctor MD3 (Ob-Gyn)"> Doctor MD3 (Ob-Gyn) </option>
+								<option value="Doctor MD4 (Geriatrics)"> Doctor MD4 (Geriatrics) </option>
+								<option value="Doctor MD5 (Family Medicine)"> Doctor MD5 (Family Medicine) </option>
+							</select>
+						</td>
+					</tr>
+					<tr height="30px"></tr>
+					<tr>
+						<td style="text-align: left;">
+							<label for="appointment_date" style="font-weight: bold; background-color: white; padding: 2px;">General Appointment Date and Time</label><br>
+							<input type="datetime-local" id="appointment_date" name="appointment_date" placeholder="General Appointment Date and Time" style="width: 275px; height: 38px;">
+						</td>
+						<td style="text-align: left;">
+							<label for="doctor_schedule_appointment_date" style="font-weight: bold; background-color: white; padding: 2px;">Doctor's Appointment Date and Time</label><br>
+							<input type="datetime-local" id="doctor_schedule_appointment_date" name="doctor_schedule_appointment_date" placeholder="Doctor's Appointment Date and Time" style="width: 275px; height: 38px;">
+						</td>
+					</tr>
+					<tr height="30px"></tr>
+					<tr>
+						<td colspan="2" style="text-align: left;">
+							<label for="message" style="font-weight: bold; background-color: white; padding: 2px;">Message</label><br>
+							<textarea id="message" name="message" placeholder="Message"></textarea>
+						</td>
+					</tr>
+					<tr height="30px"></tr>
+					<tr>
+						<td colspan="2"><button type="submit">SUBMIT</button></td>
+					</tr>
+					<tr height="30px"></tr>
+					<tr>
+						<td colspan="2"><button type="button" onclick="window.location.href='update-appointment.php'">UPDATE APPOINTMENT</button></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+
+
 		</div>
 	</div>
 	
@@ -82,56 +161,10 @@ So we started installing Hepa Filters in all Pediatric rooms.<br><br>
 			
 			</table>
 		</div>
-	</div>
-	
-	<div class="bottom_up">
-	<div>
-		Make an Appointment
-		<form method="POST" action="submit-appointment.php" onsubmit="return validateForm()">
-			<table>
-				<tr>
-					<td width="500px"> </td>
-					<td><input type="text" name="first_name" placeholder="First Name"></td>
-					<td><input type="text" name="last_name" placeholder="Last Name"></td>
-				</tr>
-				<tr height="30px"></tr>
-				<tr>
-					<td width="500px"> </td>
-					<td><input type="text" name="email" id="email" placeholder="Email Address"></td>
-					<td><input type="text" name="mobile" id="mobile" placeholder="Mobile No."></td>
-				</tr>
-				<tr height="30px"></tr>
-				<tr>
-					<td width="500px"> </td>
-					<td>
-						<select name="sex" style="width: 280px;">
-							<option value=""> -- Sex -- </option>
-							<option value="Male"> Male </option>
-							<option value="Female"> Female </option>
-						</select>
-					</td>
-					<td><input type="datetime-local" name="appointment_date" placeholder="Appointment Date and Time" style="width: 275px; height: 40px;"></td>
-				</tr>
-				<tr height="30px"></tr>
-				<tr>
-					<td width="500px"> </td>
-					<td colspan="2"><textarea name="message" placeholder="Message"> </textarea></td>
-				</tr>
-				<tr height="30px"></tr>
-				<tr>
-					<td width="500px"> </td>
-					<td colspan="2"><button type="submit"> SUBMIT </button></td>
-				</tr>
-				<tr height="30px"></tr>
-				<tr>
-					<td width="500px"> </td>
-					<td colspan="2"><button type="button" onclick="window.location.href='update-appointment.php'"> UPDATE APPOINTMENT </button></td>
-				</tr>
-			</table>
-		</form>
-	</div>
-</div>
-	
+	<!-- <div class="bottom_up">
+	</div> -->
+	<br>
+	<br>
 	<div class="nav_down">
 		<div>
 		 &copy; 2024 Commonwealth Hospital and Medical Center, site designed & developed by Charl Cadigoy, Matthew Serrano, Jassim Tagarda

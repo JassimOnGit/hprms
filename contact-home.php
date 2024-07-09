@@ -71,9 +71,10 @@
 					
 					</tr>
 			</table>
-		</div>
-	</div>
-	
+		<!-- </div>
+	</div> -->
+	<br>
+	<br>
 	<div class="nav_down">
 		<div>
 		 &copy; 2024 Commonwealth Hospital and Medical Center, site designed & developed by Charl Cadigoy, Matthew Serrano, Jassim Tagarda 
