@@ -10,4 +10,4 @@ capstone 2 adviser: Maria Romana Daguio
 
 capstone 1 panel: Roderick Mulato, Gaynesty Molino, Katherine Tulabing
 
-capstone 2 panel: TBD
+capstone 2 panel: Charmane Joy V. Barrientos, Maria Romana N. Daguio, Rosario C. Maranao
