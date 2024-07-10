@@ -7,14 +7,16 @@ echo "<hr>"; // Add a strong horizontal line here
     <form method="POST" action="" class="mb-4">
         <div class="form-group">
             <label for="patientIdentifier">Patient Name or Code:</label>
-            <input type="text" name="patientIdentifier" id="patientIdentifier" class="form-control" required>
-            <small class="form-text text-muted">Enter either Patient Code or Patient Name (Last, First, M.I)</small>
+            <input type="text" name="patientIdentifier" id="patientIdentifier" class="form-control">
+            <small class="form-text text-muted">Enter either Patient Code/Patient Name (Last, First, M.I) or Click Pull Patient Records, and we'll do it for you!</small>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+        <br>
+        <br>
+        <button type="submit" name="pullRecords" class="btn btn-secondary">Pull Patient Records</button>
     </form>
     <?php
     echo "<hr>"; // Add a strong horizontal line here
-
     // Establish database connection
     $servername = "localhost";
     $username = "root";
@@ -30,8 +32,13 @@ echo "<hr>"; // Add a strong horizontal line here
 
     // Check if the form is submitted
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Get the patient identifier from the form
-        $patientIdentifier = $_POST["patientIdentifier"];
+        if (isset($_POST['pullRecords'])) {
+            // Predefined patient identifier
+            $patientIdentifier = "PA-2024070001";
+        } else {
+            // Get the patient identifier from the form
+            $patientIdentifier = $_POST["patientIdentifier"];
+        }
         
         // Query to fetch patient id and name from patient_list based on the patient code or name
         $patientQuery = "SELECT id, fullname FROM patient_list WHERE code = ? OR fullname = ?";

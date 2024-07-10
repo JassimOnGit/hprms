@@ -65,5 +65,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="number" id="current_capacity" name="current_capacity" class="form-control" required>
     </div>
     <button type="submit" class="btn btn-primary">Update Room Capacity</button>
-    <button type="button" class="btn btn-secondary">Patient View</button>
+    <button type="button" class="btn btn-secondary" onclick="redirectToPatientView()">Patient View</button>
 </form>
+<script>
+function redirectToPatientView() {
+        var currentUrl = window.location.href; // Get current URL
+        var baseUrl = currentUrl.split('?')[0]; // Split URL to get base URL (without query parameters)
+        var newUrl = baseUrl + "?page=emergency"; // Construct new URL
+        window.location.href = newUrl; // Redirect to new URL
+    }
+</script>

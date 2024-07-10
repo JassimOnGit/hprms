@@ -24,9 +24,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $selectedAppointment = $_POST['selected_appointment'];
             $newMessage = $_POST['new_message'];
             $newDateTime = $_POST['new_date_time'];
+            $newDoctor = $_POST['new_doctor_schedule'];
+            $newDoctorDateTime = $_POST['new_doctor_date_time'];
 
-            $updateStmt = $conn->prepare("UPDATE message_list SET message = ?, appointment_date = ? WHERE id = ?");
-            $updateStmt->bind_param("ssi", $newMessage, $newDateTime, $selectedAppointment);
+            $updateStmt = $conn->prepare("UPDATE message_list SET message = ?, appointment_date = ?, doctor_schedule = ?, doctor_schedule_appointment_date = ? WHERE id = ?");
+            $updateStmt->bind_param("ssssi", $newMessage, $newDateTime, $newDoctor, $newDoctorDateTime, $selectedAppointment);
 
             if ($updateStmt->execute()) {
                 $resultHTML = "<p style='color: teal; font-weight: bold; margin-bottom: 10px;'>Congratulations! The appointment was updated successfully.</p>";
@@ -59,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $resultHTML .= "<form method='post'>"; // Form to handle update
                         $resultHTML .= "<div class='table-container'>";
                         $resultHTML .= "<table border='1' style='width: 100%; margin-top: 20px;'>";
-                        $resultHTML .= "<tr><th>Select</th><th>Full Name</th><th>Email</th><th>Reference Number</th><th>Message</th><th>Appointment Date</th></tr>";
+                        $resultHTML .= "<tr><th>Select</th><th>Full Name</th><th>Email</th><th>Reference Number</th><th>Message</th><th>Doctor</th><th>Doctor's Appointment Date</th><th>Appointment Date</th></tr>";
                         while ($row = $result->fetch_assoc()) {
                             $resultHTML .= "<tr>";
                             $resultHTML .= "<td><input type='radio' name='selected_appointment' value='" . htmlspecialchars($row['id']) . "' onchange='checkSelection()'></td>";
@@ -67,6 +69,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $resultHTML .= "<td>" . htmlspecialchars($row['email']) . "</td>";
                             $resultHTML .= "<td>" . htmlspecialchars($row['id']) . "</td>";
                             $resultHTML .= "<td>" . htmlspecialchars($row['message']) . "</td>";
+                            $resultHTML .= "<td>" . htmlspecialchars($row['doctor_schedule']) . "</td>";
+                            $resultHTML .= "<td>" . htmlspecialchars($row['doctor_schedule_appointment_date']) . "</td>"; // Displaying doctor_schedule_appointment_date
                             $resultHTML .= "<td>" . htmlspecialchars($row['appointment_date']) . "</td>"; // Displaying appointment_date
                             $resultHTML .= "</tr>";
                         }
@@ -76,9 +80,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $resultHTML .= "<label for='new_message'>New Message:</label>";
                         $resultHTML .= "<input type='text' id='new_message' name='new_message' required>";
                         $resultHTML .= "<br><br>";
-                        $resultHTML .= "<label for='new_date_time'>New Date and Time:</label>";
+                        $resultHTML .= "<label for='new_doctor_schedule'>New Doctor's Appointment:</label>";
+                        $resultHTML .= "<select id='new_doctor_schedule' name='new_doctor_schedule' required style='height: 30px;'>";
+                        $resultHTML .= "<option value='Doctor MD1 (General Practitioner)'>Doctor MD1 (General Practitioner)</option>";
+                        $resultHTML .= "<option value='Doctor MD2 (Pediatrician)'>Doctor MD2 (Pediatrician)</option>";
+                        $resultHTML .= "<option value='Doctor MD3 (Ob-Gyn)'>Doctor MD3 (Ob-Gyn)</option>";
+                        $resultHTML .= "<option value='Doctor MD4 (Geriatrics)'>Doctor MD4 (Geriatrics)</option>";
+                        $resultHTML .= "<option value='Doctor MD5 (Family Medicine)'>Doctor MD5 (Family Medicine)</option>";
+                        $resultHTML .= "</select>";
+                        $resultHTML .= "<br><br>";
+                        $resultHTML .= "<label for='new_doctor_date_time'>New Doctor's Appointment Date and Time:</label>";
+                        $resultHTML .= "<input type='datetime-local' id='new_doctor_date_time' name='new_doctor_date_time' required>";
+                        $resultHTML .= "<br><br>";
+                        $resultHTML .= "<label for='new_date_time'>New General Appointment Date and Time:</label>";
                         $resultHTML .= "<input type='datetime-local' id='new_date_time' name='new_date_time' required>";
                         $resultHTML .= "<br><br>";
+                        $resultHTML .= "<script>";
+                        $resultHTML .= "document.getElementById('new_doctor_date_time').addEventListener('input', function() {";
+                        $resultHTML .= "document.getElementById('new_date_time').required = !this.value;";
+                        $resultHTML .= "});";
+                        $resultHTML .= "document.getElementById('new_date_time').addEventListener('input', function() {";
+                        $resultHTML .= "document.getElementById('new_doctor_date_time').required = !this.value;";
+                        $resultHTML .= "});";
+                        $resultHTML .= "</script>";
                         $resultHTML .= "<button type='submit' id='updateButton' name='update' disabled>Update Selected Appointment</button>";
                         $resultHTML .= "</form>";
                     } else {
