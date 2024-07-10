@@ -6,6 +6,31 @@
     <title> CHMC </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/style.css" type="text/css" rel="stylesheet">
+    <style>
+        /* Styles for the floating chat button */
+        .chat-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #428bca;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            width: 60px;
+            height: 60px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 1000;
+        }
+        .chat-button:hover {
+            background-color: #357ABD;
+        }
+        .chat-icon {
+            font-size: 28px;
+            line-height: 60px;
+        }
+    </style>
 </head>
 <body>
 <div id="fb-root"></div> 
@@ -145,3 +170,16 @@
 </div>
 </body>
 </html>
+
+<script>
+<!-- Chat button click event-->
+function openChat() {
+	window.open('./chat-home.php', '_blank', 'width=1300, height=1050');
+}
+
+</script>
+
+<!-- Floating chat button -->
+<button class="chat-button" onclick="openChat()" style="font-size: 20px;">
+	<span class="chat-icon" onmouseover="this.innerHTML = 'Chat'" onmouseout="this.innerHTML = '&#x1F4AC;'" style="display: inline-block; width: 100px; text-align: left; font-size: 18px; position: relative; top: -10px;">&#x1F4AC;</span>
+</button>

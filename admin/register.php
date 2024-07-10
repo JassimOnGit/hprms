@@ -77,12 +77,20 @@
                 <input type="email" name="email" id="email" class="form-control" required>
               </div>
               <div class="form-group">
+                <label for="confirm_email">Confirm Email</label>
+                <input type="email" name="confirm_email" id="confirm_email" class="form-control" required>
+              </div>
+              <div class="form-group">
                 <label for="mobile">Mobile Number</label>
                 <input type="tel" name="mobile" id="mobile" class="form-control" required>
               </div>
               <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" name="confirm_password" id="confirm_password" class="form-control" required>
               </div>
               <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
               <a href="login.php" class="btn btn-secondary btn-block btn-flat">Sign In</a>
@@ -108,7 +116,10 @@
   // Form validation
   document.getElementById('register-frm').addEventListener('submit', function(event) {
     var emailInput = document.getElementById('email');
+    var confirmEmailInput = document.getElementById('confirm_email');
     var mobileInput = document.getElementById('mobile');
+    var passwordInput = document.getElementById('password');
+    var confirmPasswordInput = document.getElementById('confirm_password');
 
     // Email validation
     if (!validateEmail(emailInput.value)) {
@@ -117,10 +128,31 @@
       return false;
     }
 
+    // Confirm email validation
+    if (emailInput.value !== confirmEmailInput.value) {
+      event.preventDefault();
+      alert('Emails do not match!');
+      return false;
+    }
+
     // Mobile number validation
     if (!validateMobile(mobileInput.value)) {
       event.preventDefault();
       alert('Mobile number must be 11 digits!');
+      return false;
+    }
+
+    // Password validation
+    if (!validatePassword(passwordInput.value)) {
+      event.preventDefault();
+      alert('Password must be at least 6 characters long!');
+      return false;
+    }
+
+    // Confirm password validation
+    if (passwordInput.value !== confirmPasswordInput.value) {
+      event.preventDefault();
+      alert('Passwords do not match!');
       return false;
     }
   });
@@ -135,6 +167,11 @@
   function validateMobile(mobile) {
     var re = /^\d{11}$/;
     return re.test(mobile);
+  }
+
+  // Password validation function
+  function validatePassword(password) {
+    return password.length >= 6;
   }
 </script>
 </body>

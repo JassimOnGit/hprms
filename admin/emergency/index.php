@@ -1,5 +1,5 @@
 <?php
-echo "<h1 class='mb-4'>CHMC Emergency Room</h1>";
+echo "<h1 class='mb-4'>CHMC Emergency Room Status</h1>";
 echo "<hr>"; // Add a strong horizontal line here
 ?>
 <div class="row">

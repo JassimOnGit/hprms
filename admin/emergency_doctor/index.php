@@ -65,4 +65,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="number" id="current_capacity" name="current_capacity" class="form-control" required>
     </div>
     <button type="submit" class="btn btn-primary">Update Room Capacity</button>
+    <button type="button" class="btn btn-secondary">Patient View</button>
 </form>
